@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhinav Durgavarjhula</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f6f3ef; --dark:#0e0c0a; --rust:#c4683f; --forest:#1c3f2b;
+  --sand:#ede8e0; --cream:#f9f6f2; --text:#1c1917; --muted:#78716c;
+  --border:#e2ddd8; --font-serif:'Cormorant Garamond',Georgia,serif;
+  --font-sans:'DM Sans',system-ui,sans-serif; --max:1160px; --nav-h:60px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-weight:300;line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+@media(pointer:fine){body,a,button{cursor:none}}
+
+/* Cursor */
+#cur{position:fixed;z-index:9999;width:8px;height:8px;border-radius:50%;background:var(--rust);pointer-events:none;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .3s;opacity:0}
+#cur-ring{position:fixed;z-index:9998;width:34px;height:34px;border-radius:50%;border:1px solid rgba(196,104,63,.38);pointer-events:none;transform:translate(-50%,-50%);opacity:0;transition:opacity .3s}
+body.ch #cur{width:14px;height:14px}
+body.ch #cur-ring{border-color:rgba(196,104,63,.6)}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);display:flex;align-items:center;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(246,243,239,.95);backdrop-filter:blur(12px);border-color:var(--border)}
+.nav.on-dark:not(.scrolled) .nav-name{color:rgba(240,236,232,.88)}
+.nav.on-dark:not(.scrolled) .nav-links a{color:rgba(240,236,232,.42)}
+.nav.on-dark:not(.scrolled) .nav-links a:hover{color:rgba(240,236,232,.9)}
+.nav.on-dark:not(.scrolled) .nav-resume{color:rgba(196,104,63,.82)}
+.nav-inner{max-width:var(--max);margin:0 auto;width:100%;padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.nav-name{font-family:var(--font-serif);font-size:18px;font-weight:400;color:var(--text);text-decoration:none;white-space:nowrap;flex-shrink:0;transition:color .3s}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;letter-spacing:.01em;transition:color .2s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-resume{font-size:11.5px;font-weight:500;color:var(--rust);border:1px solid currentColor;padding:6px 16px;text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:background .2s,color .2s;flex-shrink:0}
+.nav-resume:hover{background:var(--rust);color:#fff}
+
+/* Layout */
+.full-bg{width:100%}
+.sec{padding:80px 40px;max-width:var(--max);margin:0 auto}
+.lbl{display:inline-block;font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;margin-bottom:14px}
+.lbl-rust{color:var(--rust)} .lbl-dim{color:rgba(240,236,232,.38)} .lbl-forest{color:rgba(190,225,205,.5)}
+h1,h2,h3{font-family:var(--font-serif);font-weight:400}
+h2.st{font-size:52px;line-height:1.05;margin-bottom:44px}
+.lh{color:#f0ece8} .fh{color:#e2f0e8}
+
+/* Hero */
+#hero{position:relative;overflow:hidden;background:var(--dark)}
+#hc{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-in{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:calc(var(--nav-h) + 64px) 40px 76px;min-height:64vh;display:flex;flex-direction:column;justify-content:flex-end}
+.hero-ey{display:flex;align-items:center;gap:10px;margin-bottom:28px;font-size:11px;color:rgba(240,236,232,.34);letter-spacing:.18em;text-transform:uppercase}
+.hero-d{width:6px;height:6px;border-radius:50%;background:var(--rust);flex-shrink:0}
+.hero-name{font-family:var(--font-serif);font-size:clamp(60px,8.5vw,108px);font-weight:300;line-height:.94;letter-spacing:-.02em;color:#f0ece8;margin-bottom:42px;transition:transform .6s ease}
+.hero-sub{color:rgba(240,236,232,.3)}
+.hero-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.hero-role{font-size:17px;font-weight:300;color:rgba(240,236,232,.5);max-width:450px;line-height:1.82}
+.hero-scr{display:flex;align-items:center;gap:12px;font-size:10px;color:rgba(255,255,255,.2);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.hero-scr-line{width:44px;height:1px;background:rgba(255,255,255,.14)}
+
+/* Marquee */
+#mq{background:var(--rust);overflow:hidden;padding:14px 0}
+.mq-track{display:flex;white-space:nowrap;animation:mq 26s linear infinite}
+.mq-item{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.82);padding:0 20px;flex-shrink:0}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* Stats */
+#sw{background:var(--dark);border-top:1px solid rgba(255,255,255,.06)}
+.sbar{max-width:var(--max);margin:0 auto;padding:36px 40px;display:flex}
+.stat{flex:1;text-align:center;position:relative}
+.stat+.stat::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);height:40px;width:1px;background:rgba(255,255,255,.1)}
+.stat-n{font-family:var(--font-serif);font-size:52px;line-height:1;color:var(--rust);font-weight:300}
+.stat-l{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.36);margin-top:6px}
+
+/* About */
+.about-grid{display:grid;grid-template-columns:5fr 4fr;gap:72px;align-items:start}
+.about-lead{font-family:var(--font-serif);font-size:30px;line-height:1.4;font-weight:300;margin-bottom:20px}
+.about-body{font-size:16px;font-weight:300;line-height:1.88;color:var(--muted)}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.sk{font-size:12px;font-weight:400;letter-spacing:.04em;padding:7px 15px;border:1px solid var(--border);color:var(--text);opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease,background .2s,color .2s}
+.sk.vis{opacity:1;transform:translateY(0)}
+.sk:hover{background:var(--text);color:var(--bg);border-color:var(--text)}
+.fact-list{display:flex;flex-direction:column}
+.fact{padding:16px 0;border-bottom:1px solid var(--border)}
+.fact:first-child{border-top:1px solid var(--border)}
+.fact-l{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--rust);margin-bottom:4px}
+.fact-v{font-size:15.5px;font-weight:300}
+
+/* Experience */
+.exp-wrap{position:relative;padding-left:32px;margin-top:44px}
+.exp-line{position:absolute;left:0;top:0;width:1px;background:linear-gradient(to bottom,var(--rust),rgba(196,104,63,.15));height:0;transition:height 1.5s cubic-bezier(.4,0,.2,1)}
+.exp-line.drawn{height:100%}
+.exp-item{display:grid;grid-template-columns:190px 1fr;gap:40px;padding:32px 0;border-bottom:1px solid rgba(255,255,255,.07);position:relative}
+.exp-item::before{content:'';position:absolute;left:-38px;top:38px;width:9px;height:9px;border-radius:50%;background:var(--rust);box-shadow:0 0 0 3px #0e0c0a,0 0 0 4.5px rgba(196,104,63,.3)}
+.exp-item:first-child{border-top:1px solid rgba(255,255,255,.07)}
+.exp-per{font-size:12px;color:rgba(255,255,255,.28);padding-top:6px;line-height:1.7}
+.exp-role{font-family:var(--font-serif);font-size:25px;color:#f0ece8;margin-bottom:4px}
+.exp-co{font-size:12.5px;color:rgba(196,104,63,.8);font-weight:400;margin-bottom:12px;letter-spacing:.03em}
+.exp-desc{font-size:15px;color:rgba(240,236,232,.46);line-height:1.85}
+
+/* Events */
+.ev-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.ev-card{background:#fff;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease}
+.ev-card:hover{transform:translateY(-5px);box-shadow:0 24px 52px rgba(28,25,23,.09)}
+.ev-img{width:100%;aspect-ratio:16/9;overflow:hidden;position:relative}
+.ev-body{padding:22px 24px 28px}
+.ev-num{font-size:10.5px;color:var(--rust);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.ev-name{font-family:var(--font-serif);font-size:27px;margin-bottom:8px;line-height:1.15}
+.ev-desc{font-size:15px;color:var(--muted);line-height:1.8}
+
+/* Photos drag strip */
+.dso{overflow-x:scroll;scrollbar-width:none;position:relative;cursor:grab;padding:0 40px 56px}
+.dso::-webkit-scrollbar{display:none}
+.dso.dg{cursor:grabbing}
+.ds{display:flex;gap:10px;width:max-content;user-select:none;-webkit-user-select:none}
+.sp{flex-shrink:0;height:290px;overflow:hidden;position:relative;transition:transform .3s ease}
+.sp:hover{transform:scale(.98)}
+.ph-tint{position:absolute;inset:0;background:rgba(196,104,63,.16);opacity:0;transition:opacity .3s}
+.sp:hover .ph-tint{opacity:1}
+.drag-hint{text-align:center;font-size:10.5px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;padding-bottom:64px}
+
+/* Certifications */
+.cert-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.cert-cell{padding:28px 30px;border-bottom:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08);transition:background .25s}
+.cert-cell:hover{background:rgba(255,255,255,.04)}
+.cert-cell:nth-child(3n){border-right:none}
+.cert-cell:nth-last-child(-n+3){border-bottom:none}
+.cert-n{font-family:var(--font-serif);font-size:42px;color:rgba(255,255,255,.08);line-height:1;margin-bottom:14px}
+.cert-name{font-family:var(--font-serif);font-size:19px;line-height:1.3;color:#e2f0e8;margin-bottom:8px}
+.cert-iss{font-size:12.5px;color:rgba(226,240,232,.48)}
+.cert-date{font-size:11px;color:rgba(226,240,232,.28);margin-top:4px}
+
+/* Media */
+.m-tabs{display:flex;margin-bottom:28px;border-bottom:1px solid rgba(255,255,255,.1)}
+.m-tab{font-size:13.5px;color:rgba(255,255,255,.3);padding-bottom:14px;margin-right:32px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--font-sans);transition:color .2s,border-color .2s}
+.m-tab.active{color:#f0ece8;border-bottom-color:var(--rust)}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.pg-it{aspect-ratio:1;overflow:hidden;position:relative}
+.pg-it:nth-child(4){grid-column:span 2;aspect-ratio:2/1}
+.pg-it:hover .ph-tint{opacity:1}
+.vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.vc{aspect-ratio:16/9;position:relative;overflow:hidden;background:#1a1510;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+.play-c{width:54px;height:54px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:background .25s,border-color .25s}
+.vc:hover .play-c{background:rgba(196,104,63,.22);border-color:var(--rust)}
+.vid-l{font-size:10px;color:rgba(255,255,255,.28);letter-spacing:.16em;text-transform:uppercase}
+
+/* Blog */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.bc{display:flex;flex-direction:column}
+.bi{width:100%;aspect-ratio:3/2;overflow:hidden;margin-bottom:18px}
+.bi-in{width:100%;height:100%;transition:transform .45s ease}
+.bc:hover .bi-in{transform:scale(1.05)}
+.b-tag{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:8px}
+.b-title{font-family:var(--font-serif);font-size:25px;line-height:1.2;margin-bottom:8px}
+.b-date{font-size:11.5px;color:var(--muted);margin-bottom:10px}
+.b-exc{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:12px}
+.b-read{font-size:12.5px;color:var(--rust);letter-spacing:.04em;text-decoration:none}
+.bc:hover .b-title{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--border)}
+
+/* Contact */
+.ct-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.ct-form{display:flex;flex-direction:column;gap:24px}
+.ff{display:flex;flex-direction:column;gap:8px}
+.fl{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.fi{background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.14);padding:10px 0;font-family:var(--font-sans);font-size:16px;font-weight:300;color:#f0ece8;outline:none;width:100%;transition:border-color .25s}
+.fi::placeholder{color:rgba(255,255,255,.18)}
+.fi:focus{border-color:var(--rust)}
+textarea.fi{resize:none;min-height:88px}
+.fs-btn{margin-top:6px;padding:14px 36px;background:var(--rust);color:#fff;border:none;font-family:var(--font-sans);font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;transition:opacity .2s;align-self:flex-start}
+.fs-btn:hover{opacity:.82}
+.ct-info{display:flex;flex-direction:column}
+.ci{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.ci:first-child{border-top:1px solid rgba(255,255,255,.07)}
+.ci-l{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:5px}
+.ci-v{font-size:15.5px;color:#f0ece8}
+.ci-v a{color:#f0ece8;text-decoration:none;transition:color .2s}
+.ci-v a:hover{color:var(--rust)}
+
+/* Footer */
+footer{background:var(--dark);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.05)}
+footer span{font-size:12px;color:rgba(255,255,255,.22)}
+
+/* Placeholder */
+.ph-box{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:100%}
+.ph-lt{background:#e0dbd4} .ph-dk{background:#1e1912}
+.ph-box svg{opacity:.14}
+.ph-box span{font-size:9px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+
+/* Fade in */
+.fia{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.fia.vis{opacity:1;transform:none}
+
+/* Tweaks */
+.tw-p{position:fixed;bottom:24px;right:24px;z-index:999;background:var(--bg);border:1px solid var(--border);padding:20px 22px;width:218px;box-shadow:0 8px 32px rgba(28,25,23,.12)}
+.tw-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.tw-ttl{font-size:10.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+.tw-x{background:none;border:none;font-size:20px;line-height:1;padding:0;color:var(--muted)}
+.tw-lb{font-size:10px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.tw-sw{display:flex;gap:8px}
+.tw-s{width:26px;height:26px;border:2px solid transparent;transition:border-color .2s;flex-shrink:0}
+.tw-s.sel{border-color:var(--text)}
+
+/* Responsive */
+@media(max-width:960px){.about-grid,.ct-grid{grid-template-columns:1fr;gap:48px}.ev-grid{grid-template-columns:1fr}.cert-grid{grid-template-columns:1fr 1fr}.blog-grid{grid-template-columns:1fr 1fr}h2.st{font-size:42px}}
+@media(max-width:640px){.sec{padding:56px 24px}.nav-inner{padding:0 20px}.nav-links a:not(.nav-resume){display:none}h2.st{font-size:34px}.hero-name{font-size:52px}.exp-item{grid-template-columns:1fr;gap:4px}.cert-grid{grid-template-columns:1fr}.blog-grid{grid-template-columns:1fr}.sbar{flex-wrap:wrap}.stat{flex:50%;padding:12px}.dso{padding:0 24px 48px}.exp-wrap{padding-left:20px}}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "#c4683f"
+}/*EDITMODE-END*/;
+
+const experiences = [
+  { per:"Jan 2024 to Present", role:"Marketing and Communications Coordinator", co:"Your Organization, Halifax NS", desc:"Leading marketing strategy, content creation, and community outreach. Managing social media presence and coordinating campaigns that grow audience engagement and drive meaningful participation." },
+  { per:"Sep 2022 to Apr 2024", role:"Event Coordinator", co:"Dalhousie Student Union, Halifax NS", desc:"Planned and executed campus-wide events with 200 to 1,000+ attendees. Managed vendor relationships, logistics, budgeting, and volunteer teams across a full academic-year calendar." },
+  { per:"Jun 2023 to Dec 2023", role:"Community Outreach Lead", co:"Your Organization, Halifax NS", desc:"Developed outreach programs connecting students with mental health resources and community services. Facilitated workshops and built partnerships with local organizations across Halifax." },
+  { per:"Sep 2021 to Apr 2022", role:"Marketing Volunteer", co:"Campus Community Initiative, Halifax NS", desc:"Created content and managed social channels for a student-run community initiative. Grew Instagram following by 40% over one semester through consistent storytelling." }
+];
+
+const eventsData = [
+  { name:"Dalhousie Orientation Week", date:"September 2023", desc:"Coordinated a week-long orientation for 800+ incoming students across 12 events, from campus tours to evening socials." },
+  { name:"Halifax Community Forum", date:"March 2023", desc:"Organized a public forum bringing together community leaders, student groups, and local organizations to discuss mental health access." },
+  { name:"Annual Fundraiser Gala", date:"November 2022", desc:"Managed a formal fundraising event that raised over $15,000 for mental health awareness programs in Atlantic Canada." },
+  { name:"Marketing and Brand Workshop", date:"February 2024", desc:"Hosted a professional development workshop for 60 participants covering brand storytelling, content strategy, and digital presence." }
+];
+
+const certs = [
+  { name:"Google Digital Marketing and E-commerce Certificate", iss:"Google", date:"2024" },
+  { name:"Mental Health First Aid", iss:"Mental Health Commission of Canada", date:"2023" },
+  { name:"Event Planning Fundamentals", iss:"Canadian Institute of Planners", date:"2023" },
+  { name:"Social Media Marketing Professional", iss:"Meta Blueprint", date:"2024" },
+  { name:"Community Engagement Practitioner", iss:"IAP2 Canada", date:"2023" },
+  { name:"Project Management Essentials", iss:"Project Management Institute", date:"2024" }
+];
+
+const posts = [
+  { tag:"Psychology and Marketing", title:"What Studying Human Behaviour Taught Me About Campaigns", date:"April 2026", exc:"The same principles that explain why people form habits also explain why some marketing works and most does not." },
+  { tag:"Events", title:"Building Community: Lessons After 20 Events", date:"February 2026", exc:"After three years of planning events of every scale, I keep coming back to the same question: what actually makes people feel welcome?" },
+  { tag:"Reflection", title:"The Underrated Skill in Any Creative Field", date:"December 2025", exc:"It is not strategy, or aesthetics. It is knowing when to listen, and then genuinely doing it." }
+];
+
+const skills = ["Event Management","Community Building","Marketing Strategy","Social Media","Content Creation","Photography","Psychology","Project Planning","Copywriting","Videography"];
+
+/* Placeholder */
+function Ph({ dark, label="Your photo here" }) {
+  return (
+    <div className={`ph-box ${dark ? 'ph-dk' : 'ph-lt'}`}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="18" height="18" rx="1" stroke={dark?'#f0ece8':'#1c1917'} strokeWidth="1.5"/>
+        <circle cx="8.5" cy="8.5" r="1.5" fill={dark?'#f0ece8':'#1c1917'}/>
+        <path d="M3 15l5-5 4 4 3-3 6 6" stroke={dark?'#f0ece8':'#1c1917'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+      <span style={{ color: dark ? 'rgba(240,236,232,.3)' : undefined }}>{label}</span>
+    </div>
+  );
+}
+
+/* Canvas particles */
+function useParticles(ref) {
+  useEffect(() => {
+    const canvas = ref.current; if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let mx = -999, my = -999, raf;
+    const N = 62;
+    const pts = [];
+    function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+    resize();
+    for (let i = 0; i < N; i++) pts.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, vx:(Math.random()-.5)*.38, vy:(Math.random()-.5)*.38, r:Math.random()*1.2+.5 });
+    function draw() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for (const p of pts) {
+        const dx=mx-p.x, dy=my-p.y, d=Math.sqrt(dx*dx+dy*dy);
+        if (d<170) { p.vx+=dx*.000044; p.vy+=dy*.000044; }
+        p.vx*=.986; p.vy*=.986;
+        p.x=(p.x+p.vx+canvas.width)%canvas.width;
+        p.y=(p.y+p.vy+canvas.height)%canvas.height;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(196,104,63,.56)'; ctx.fill();
+      }
+      for (let i=0;i<N;i++) for (let j=i+1;j<N;j++) {
+        const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.sqrt(dx*dx+dy*dy);
+        if (d<112) { ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.strokeStyle=`rgba(196,104,63,${.14*(1-d/112)})`; ctx.lineWidth=.5; ctx.stroke(); }
+      }
+      raf=requestAnimationFrame(draw);
+    }
+    const mm = e => { mx=e.clientX; my=e.clientY; };
+    const rz = () => resize();
+    window.addEventListener('mousemove',mm); window.addEventListener('resize',rz);
+    draw();
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('mousemove',mm); window.removeEventListener('resize',rz); };
+  }, []);
+}
+
+/* Count-up component */
+function Num({ to, suf='' }) {
+  const r = useRef();
+  useEffect(() => {
+    const el = r.current; if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return; obs.disconnect();
+      const end=parseInt(to); let cur=0;
+      const step=Math.max(1,Math.ceil(end/70));
+      const t=setInterval(()=>{ cur=Math.min(cur+step,end); el.textContent=cur+suf; if(cur>=end) clearInterval(t); },18);
+    },{threshold:.5});
+    obs.observe(el);
+    return ()=>obs.disconnect();
+  },[]);
+  return <span ref={r}>0{suf}</span>;
+}
+
+/* Nav */
+function Nav({ active, scrolled, onDark }) {
+  const links=[['about','About'],['experience','Experience'],['events','Events'],['photos','Photos'],['certifications','Certs'],['media','Media'],['blog','Blog'],['contact','Contact']];
+  return (
+    <nav className={`nav${scrolled?' scrolled':''}${onDark&&!scrolled?' on-dark':''}`}>
+      <div className="nav-inner">
+        <a href="#" className="nav-name">Abhinav D.</a>
+        <div className="nav-links">
+          {links.map(([id,lbl])=><a key={id} href={`#${id}`} className={active===id?'active':''}>{lbl}</a>)}
+          <a href="#" className="nav-resume">Resume ↓</a>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+/* Hero */
+function Hero() {
+  const cr = useRef();
+  const nr = useRef();
+  useParticles(cr);
+  useEffect(() => {
+    const el = nr.current; if (!el) return;
+    const mm = e => {
+      const rx=(e.clientX/window.innerWidth-.5)*10, ry=(e.clientY/window.innerHeight-.5)*5;
+      el.style.transform=`translate(${rx}px,${ry}px)`;
+    };
+    window.addEventListener('mousemove',mm);
+    return ()=>window.removeEventListener('mousemove',mm);
+  },[]);
+  return (
+    <div id="hero" data-screen-label="01 Hero" data-bg="dark">
+      <canvas id="hc" ref={cr}/>
+      <div className="hero-in">
+        <div className="hero-ey"><span className="hero-d"/>Halifax, NS · Open to opportunities</div>
+        <h1 className="hero-name" ref={nr}>Abhinav<br/><span className="hero-sub">Durgavarjhula</span></h1>
+        <div className="hero-foot">
+          <p className="hero-role">Psychology graduate from Dalhousie University, building communities, crafting events, and making things that genuinely connect with people.</p>
+          <div className="hero-scr"><div className="hero-scr-line"/>Scroll to explore</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Marquee */
+function Marquee() {
+  const items=['Event Management','Community Building','Marketing','Photography','Psychology','Social Media','Storytelling','Videography','Halifax NS','Content Creation'];
+  const all=[...items,...items];
+  return (
+    <div id="mq">
+      <div className="mq-track">
+        {all.map((t,i)=><React.Fragment key={i}><span className="mq-item">{t}</span><span className="mq-item" style={{opacity:.32}}>·</span></React.Fragment>)}
+      </div>
+    </div>
+  );
+}
+
+/* Stats */
+function Stats() {
+  return (
+    <div id="sw" data-bg="dark">
+      <div className="sbar">
+        {[{n:20,s:'+',l:'Events Managed'},{n:3,s:'+',l:'Years Experience'},{n:1000,s:'+',l:'People Reached'},{n:6,s:'',l:'Certifications'}].map((x,i)=>(
+          <div key={i} className="stat"><div className="stat-n"><Num to={x.n} suf={x.s}/></div><div className="stat-l">{x.l}</div></div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* About */
+function About() {
+  const sr = useRef();
+  useEffect(()=>{
+    const el=sr.current; if(!el) return;
+    const tags=el.querySelectorAll('.sk');
+    const obs=new IntersectionObserver(([e])=>{
+      if(!e.isIntersecting) return; obs.disconnect();
+      tags.forEach((t,i)=>setTimeout(()=>t.classList.add('vis'),i*52));
+    },{threshold:.3});
+    obs.observe(el);
+    return()=>obs.disconnect();
+  },[]);
+  return (
+    <div className="full-bg" id="about" data-screen-label="02 About" style={{background:'var(--bg)'}}>
+      <section className="sec fia">
+        <span className="lbl lbl-rust">About</span>
+        <div className="about-grid">
+          <div>
+            <p className="about-lead">Curious about people.<br/>Serious about craft.</p>
+            <p className="about-body">A recent BSc Psychology graduate from Dalhousie University, based in Halifax, Nova Scotia. My background in human behaviour shapes how I approach every project, whether that is designing an event experience, writing campaign copy, or building community programming that actually lands.</p>
+            <br/>
+            <p className="about-body">I am drawn to work at the intersection of people and strategy. The best events, campaigns, and communities share a common thread: they make people feel like they belong somewhere.</p>
+            <div className="skills-wrap" ref={sr}>
+              {skills.map((s,i)=><span key={i} className="sk">{s}</span>)}
+            </div>
+          </div>
+          <div className="fact-list">
+            {[['Education',"BSc Psychology, Dalhousie University '26"],['Based in','Halifax, Nova Scotia'],['Focus','Event Management · Community · Marketing'],['Languages','English · Hindi · Telugu '],['Status','Open to new opportunities']].map(([l,v],i)=>(
+              <div key={i} className="fact"><div className="fact-l">{l}</div><div className="fact-v">{v}</div></div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* Experience */
+function Experience() {
+  const lr = useRef();
+  useEffect(()=>{
+    const el=lr.current; if(!el) return;
+    const obs=new IntersectionObserver(([e])=>{
+      if(e.isIntersecting){ el.classList.add('drawn'); obs.disconnect(); }
+    },{threshold:.05});
+    obs.observe(el.parentElement);
+    return()=>obs.disconnect();
+  },[]);
+  return (
+    <div className="full-bg" style={{background:'var(--dark)'}} data-bg="dark" id="experience" data-screen-label="03 Experience">
+      <section className="sec">
+        <span className="lbl lbl-dim">Experience</span>
+        <h2 className="st lh">Work History</h2>
+        <div className="exp-wrap">
+          <div className="exp-line" ref={lr}/>
+          {experiences.map((e,i)=>(
+            <div key={i} className="exp-item fia">
+              <div className="exp-per">{e.per}</div>
+              <div><div className="exp-role">{e.role}</div><div className="exp-co">{e.co}</div><p className="exp-desc">{e.desc}</p></div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* Events */
+function Events() {
+  return (
+    <div className="full-bg" style={{background:'var(--cream)'}} id="events" data-screen-label="04 Events">
+      <section className="sec">
+        <span className="lbl lbl-rust">Events</span>
+        <h2 className="st">Events I've Managed</h2>
+        <div className="ev-grid">
+          {eventsData.map((e,i)=>(
+            <div key={i} className="ev-card fia">
+              <div className="ev-img"><Ph dark={false}/></div>
+              <div className="ev-body">
+                <div className="ev-num">{String(i+1).padStart(2,'0')} / {e.date}</div>
+                <div className="ev-name">{e.name}</div>
+                <p className="ev-desc">{e.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* Photos */
+function Photos() {
+  const ref=useRef(), dRef=useRef(false), sX=useRef(0), sL=useRef(0);
+  const [dg,setDg]=useState(false);
+  const widths=[240,340,280,260,320,240,300,340];
+  function dn(e){ dRef.current=true; setDg(true); const px=e.touches?e.touches[0].pageX:e.pageX; sX.current=px-ref.current.getBoundingClientRect().left; sL.current=ref.current.scrollLeft; }
+  function mv(e){ if(!dRef.current) return; e.preventDefault(); const px=e.touches?e.touches[0].pageX:e.pageX; ref.current.scrollLeft=sL.current-(px-ref.current.getBoundingClientRect().left-sX.current)*1.4; }
+  function up(){ dRef.current=false; setDg(false); }
+  return (
+    <div style={{background:'var(--sand)'}} id="photos" data-screen-label="05 Photos">
+      <div className="sec" style={{paddingBottom:24}}>
+        <span className="lbl lbl-rust">Photos</span>
+        <h2 className="st">Moments</h2>
+      </div>
+      <div className={`dso${dg?' dg':''}`} ref={ref}
+        onMouseDown={dn} onMouseMove={mv} onMouseUp={up} onMouseLeave={up}
+        onTouchStart={dn} onTouchMove={mv} onTouchEnd={up}>
+        <div className="ds">
+          {widths.map((w,i)=>(
+            <div key={i} className="sp" style={{width:w}}>
+              <Ph dark={false} label="Drop photo here"/>
+              <div className="ph-tint"/>
+            </div>
+          ))}
+        </div>
+      </div>
+      <p className="drag-hint" style={{background:'var(--sand)'}}>Drag to explore</p>
+    </div>
+  );
+}
+
+/* Certifications */
+function Certifications() {
+  return (
+    <div className="full-bg" style={{background:'var(--forest)'}} id="certifications" data-screen-label="06 Certifications">
+      <section className="sec">
+        <span className="lbl lbl-forest">Credentials</span>
+        <h2 className="st fh">Certifications</h2>
+        <div className="cert-grid">
+          {certs.map((c,i)=>(
+            <div key={i} className="cert-cell fia">
+              <div className="cert-n">{String(i+1).padStart(2,'0')}</div>
+              <div className="cert-name">{c.name}</div>
+              <div className="cert-iss">{c.iss}</div>
+              <div className="cert-date">{c.date}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* Media */
+function Media() {
+  const [tab,setTab]=useState('photo');
+  return (
+    <div className="full-bg" style={{background:'var(--dark)'}} data-bg="dark" id="media" data-screen-label="07 Media">
+      <section className="sec">
+        <span className="lbl lbl-dim">Visual Work</span>
+        <h2 className="st lh">Photography and Videography</h2>
+        <div className="m-tabs">
+          <button className={`m-tab${tab==='photo'?' active':''}`} onClick={()=>setTab('photo')}>Photography</button>
+          <button className={`m-tab${tab==='video'?' active':''}`} onClick={()=>setTab('video')}>Videography</button>
+        </div>
+        {tab==='photo' ? (
+          <div className="photo-grid">
+            {[1,2,3,4,5,6].map((_,i)=>(
+              <div key={i} className="pg-it"><Ph dark={true}/><div className="ph-tint"/></div>
+            ))}
+          </div>
+        ) : (
+          <div className="vid-grid">
+            {[1,2,3].map((_,i)=>(
+              <div key={i} className="vc">
+                <div className="play-c"><svg width="13" height="15" viewBox="0 0 13 15" fill="white" style={{marginLeft:2}}><path d="M0 0L13 7.5L0 15V0Z"/></svg></div>
+                <div className="vid-l">Film {String(i+1).padStart(2,'0')}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
+
+/* Blog */
+function Blog() {
+  return (
+    <div className="full-bg" style={{background:'var(--bg)'}} id="blog" data-screen-label="08 Blog">
+      <section className="sec">
+        <span className="lbl lbl-rust">Writing</span>
+        <h2 className="st">Blog</h2>
+        <div className="blog-grid">
+          {posts.map((p,i)=>(
+            <div key={i} className="bc fia">
+              <div className="bi"><div className="bi-in"><Ph dark={false}/></div></div>
+              <span className="b-tag">{p.tag}</span>
+              <h3 className="b-title">{p.title}</h3>
+              <span className="b-date">{p.date}</span>
+              <p className="b-exc">{p.exc}</p>
+              <a href="#" className="b-read">Read more</a>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* Contact */
+function Contact() {
+  const [sent,setSent]=useState(false);
+  return (
+    <div className="full-bg" style={{background:'var(--dark)'}} data-bg="dark" id="contact" data-screen-label="09 Contact">
+      <section className="sec">
+        <span className="lbl lbl-dim">Contact</span>
+        <h2 className="st lh">Get in Touch</h2>
+        <div className="ct-grid">
+          <form className="ct-form" onSubmit={e=>{e.preventDefault();setSent(true);}}>
+            <div className="ff"><label className="fl">Name</label><input className="fi" type="text" placeholder="Your name" required/></div>
+            <div className="ff"><label className="fl">Email</label><input className="fi" type="email" placeholder="your@email.com" required/></div>
+            <div className="ff"><label className="fl">Message</label><textarea className="fi" rows="4" placeholder="Say hello..." required></textarea></div>
+            {sent ? <p style={{fontSize:15,color:'var(--rust)'}}>Thank you, I will be in touch soon.</p>
+                  : <button type="submit" className="fs-btn">Send Message</button>}
+          </form>
+          <div className="ct-info">
+            {[['Email','d.abhinav12@gmail.com','mailto:d.abhinav12@gmail.com'],['Location','Halifax, Nova Scotia',null],['LinkedIn','https://www.linkedin.com/in/abhinav-durgavarjhula/','https://www.linkedin.com/in/abhinav-durgavarjhula/'],['Instagram','@the.diarybylens','https://instagram.com/the.diarybylens']].map(([l,v,h],i)=>(
+              <div key={i} className="ci"><div className="ci-l">{l}</div><div className="ci-v">{h?<a href={h}>{v}</a>:v}</div></div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* Tweaks */
+function TweaksPanel({ open, onClose, tweaks, setTweak }) {
+  if (!open) return null;
+  const accents=[{c:'#c4683f',n:'Terracotta'},{c:'#3a7ca5',n:'Slate Blue'},{c:'#7a5ea7',n:'Plum'},{c:'#4a8c5c',n:'Forest'}];
+  return (
+    <div className="tw-p">
+      <div className="tw-h"><span className="tw-ttl">Tweaks</span><button className="tw-x" onClick={onClose}>×</button></div>
+      <div><div className="tw-lb">Accent Color</div><div className="tw-sw">{accents.map(a=><div key={a.c} className={`tw-s${tweaks.accent===a.c?' sel':''}`} style={{background:a.c}} title={a.n} onClick={()=>setTweak('accent',a.c)}/>)}</div></div>
+    </div>
+  );
+}
+
+/* App */
+function App() {
+  const [tweaks,setTweaksState]=useState(TWEAK_DEFAULTS);
+  const [twOpen,setTwOpen]=useState(false);
+  const [active,setActive]=useState('');
+  const [scrolled,setScrolled]=useState(false);
+  const [onDark,setOnDark]=useState(true);
+
+  function setTweak(k,v){ const n={...tweaks,[k]:v}; setTweaksState(n); window.parent.postMessage({type:'__edit_mode_set_keys',edits:{[k]:v}},'*'); }
+
+  useEffect(()=>{ document.documentElement.style.setProperty('--rust',tweaks.accent); },[tweaks]);
+
+  useEffect(()=>{
+    // Scroll reveals
+    const fias=document.querySelectorAll('.fia');
+    const fo=new IntersectionObserver(entries=>{entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('vis');fo.unobserve(e.target);} });},{threshold:.1});
+    fias.forEach(el=>fo.observe(el));
+
+    // Active section
+    const ids=['about','experience','events','photos','certifications','media','blog','contact'];
+    const ao=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting) setActive(e.target.id);});},{rootMargin:'-30% 0px -65% 0px'});
+    ids.forEach(id=>{ const el=document.getElementById(id); if(el) ao.observe(el); });
+
+    // Dark detection
+    const darkIds=new Set(['hero','sw','experience','media','contact']);
+    const allIds=['hero','sw',...ids];
+    const do_=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting) setOnDark(darkIds.has(e.target.id));});},{rootMargin:'-50% 0px -49% 0px'});
+    allIds.forEach(id=>{ const el=document.getElementById(id); if(el) do_.observe(el); });
+
+    const onScroll=()=>setScrolled(window.scrollY>40);
+    window.addEventListener('scroll',onScroll,{passive:true});
+
+    const onMsg=e=>{ if(e.data?.type==='__activate_edit_mode') setTwOpen(true); if(e.data?.type==='__deactivate_edit_mode') setTwOpen(false); };
+    window.addEventListener('message',onMsg);
+    window.parent.postMessage({type:'__edit_mode_available'},'*');
+
+    return()=>{ fo.disconnect(); ao.disconnect(); do_.disconnect(); window.removeEventListener('scroll',onScroll); window.removeEventListener('message',onMsg); };
+  },[]);
+
+  return (
+    <>
+      <Nav active={active} scrolled={scrolled} onDark={onDark}/>
+      <Hero/>
+      <Marquee/>
+      <Stats/>
+      <About/>
+      <Experience/>
+      <Events/>
+      <Photos/>
+      <Certifications/>
+      <Media/>
+      <Blog/>
+      <Contact/>
+      <footer>
+        <span>2026 Abhinav Durgavarjhula</span>
+        <span>Halifax, Nova Scotia</span>
+      </footer>
+      <TweaksPanel open={twOpen} onClose={()=>{ setTwOpen(false); window.parent.postMessage({type:'__edit_mode_dismissed'},'*'); }} tweaks={tweaks} setTweak={setTweak}/>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+<script>
+(function(){
+  if (!window.matchMedia('(pointer:fine)').matches) return;
+  const dot=document.getElementById('cur'), ring=document.getElementById('cur-ring');
+  if (!dot||!ring) return;
+  let cx=-100,cy=-100,rx=-100,ry=-100;
+  document.addEventListener('mousemove',e=>{ cx=e.clientX; cy=e.clientY; dot.style.left=cx+'px'; dot.style.top=cy+'px'; dot.style.opacity='1'; ring.style.opacity='1'; });
+  document.addEventListener('mouseleave',()=>{ dot.style.opacity='0'; ring.style.opacity='0'; });
+  (function loop(){ rx+=(cx-rx)*.11; ry+=(cy-ry)*.11; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+  document.addEventListener('mouseover',e=>{ if(e.target.closest('a,button')) document.body.classList.add('ch'); });
+  document.addEventListener('mouseout',e=>{ if(e.target.closest('a,button')) document.body.classList.remove('ch'); });
+})();
+</script>
+</body>
+</html>
