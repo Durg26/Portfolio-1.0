@@ -1,0 +1,17 @@
+{
+  "name": "Abhinav Durgavarjhula",
+  "short_name": "Abhinav",
+  "description": "Portfolio of Abhinav Durgavarjhula — events, marketing, community, photography.",
+  "theme_color": "#c4683f",
+  "background_color": "#0e0c0a",
+  "display": "standalone",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
