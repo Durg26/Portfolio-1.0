@@ -42,7 +42,7 @@ export default function Hero(): JSX.Element {
   }, []);
 
   return (
-    <div id="hero" data-bg="dark">
+    <div id="hero">
       <canvas id="hc" ref={canvasRef} />
       <div className="hero-in">
         <div className="hero-ey">

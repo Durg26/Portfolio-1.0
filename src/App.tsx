@@ -18,7 +18,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BlogPost from './pages/BlogPost';
 
-const DARK_SECTION_IDS = new Set(['hero', 'sw', 'experience', 'media', 'contact']);
+const DARK_SECTION_IDS = new Set(['sw', 'experience', 'media', 'contact']);
 
 function PortfolioHome(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(() => {

@@ -13,6 +13,7 @@ export interface EventItem {
   name: string;
   date: string;
   desc: string;
+  slug: string;
 }
 
 export interface Cert {
@@ -88,21 +89,25 @@ export const eventsData: EventItem[] = [
     name: 'Dalhousie Orientation Week',
     date: 'August 2025',
     desc: 'Full ownership of promotional strategy, logistics, and on-site execution for Dalhousie\'s flagship Orientation Week, reaching thousands of incoming students.',
+    slug: 'dalhousie-orientation-week',
   },
   {
     name: 'Impact Awards',
     date: '2025',
     desc: 'Planned and delivered the Impact Awards ceremony for Dalhousie Student Affairs, managing end-to-end production, communication, and on-the-day operations.',
+    slug: 'impact-awards-2025',
   },
   {
     name: 'Science Society Events',
     date: '2023 to 2024',
     desc: 'Led marketing and PR for 4+ Science Society events per semester, driving student engagement through social media strategy, campus partnerships, and cohesive visual branding.',
+    slug: 'science-society-events',
   },
   {
     name: 'Event Tree Platform Launch',
     date: 'Oct 2024',
     desc: 'Founded and launched Event Tree, a campus event discovery platform for Dalhousie students. Handled concept, UX design, promotion strategy, and rollout from the ground up.',
+    slug: 'event-tree-launch',
   },
 ];
 
@@ -153,4 +158,32 @@ export const skills: string[] = [
   'Research',
   'Branding',
   'Psychology',
+];
+
+export interface PhotoItem {
+  src: string;
+  width: number;
+  alt: string;
+}
+
+export const photos: PhotoItem[] = [
+  { src: '', width: 240, alt: 'Moment 1' },
+  { src: '', width: 340, alt: 'Moment 2' },
+  { src: '', width: 280, alt: 'Moment 3' },
+  { src: '', width: 260, alt: 'Moment 4' },
+  { src: '', width: 320, alt: 'Moment 5' },
+  { src: '', width: 240, alt: 'Moment 6' },
+  { src: '', width: 300, alt: 'Moment 7' },
+  { src: '', width: 340, alt: 'Moment 8' },
+];
+
+export interface VideoItem {
+  label: string;
+  youtubeId: string;
+}
+
+export const videos: VideoItem[] = [
+  { label: 'Film 01', youtubeId: '' },
+  { label: 'Film 02', youtubeId: '' },
+  { label: 'Film 03', youtubeId: '' },
 ];
