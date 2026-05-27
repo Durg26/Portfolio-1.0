@@ -3,6 +3,10 @@ export interface Experience {
   role: string;
   co: string;
   desc: string;
+  type: string;
+  typeKey: string;
+  color: string;
+  highlight: string;
 }
 
 export interface EventItem {
@@ -28,32 +32,52 @@ export const experiences: Experience[] = [
   {
     per: 'Oct 2025 to Present',
     role: 'Social Media Coordinator',
-    co: 'Abstract Cafe, Dalhousie Student Union — Halifax, NS',
-    desc: 'Managing end-to-end content strategy for the cafe\'s Instagram, growing the account to 1K+ followers and 5K+ views organically without paid promotion. Designing menus, pricing materials, and branded content while monitoring performance through Instagram Insights to optimize posting strategy.',
+    co: 'Abstract Cafe, Dalhousie Student Union',
+    desc: 'Running the full content pipeline for the cafe\'s Instagram: planning, scheduling, audience targeting, and performance review through Instagram Insights. Designing menus, pricing materials, and branded content that keeps the account growing without any paid promotion.',
+    type: 'Social Media',
+    typeKey: 'social',
+    color: '#c4683f',
+    highlight: '1K+ followers and 5K+ views, zero paid spend',
   },
   {
     per: 'Aug 2025 to Present',
-    role: 'Campus Engagement Assistant (CEA)',
-    co: 'Student Affairs, Dalhousie University — Halifax, NS',
-    desc: 'Executing multi-channel campaigns reaching 19,000+ students in collaboration with Student Experience, Operations, and Communications teams. Planning and delivering high-impact campus events including Orientation Week and Impact Awards, with full ownership of promotional strategy, logistics coordination, and on-site execution.',
+    role: 'Campus Engagement Assistant',
+    co: 'Student Affairs, Dalhousie University',
+    desc: 'Running multi-channel campaigns across Student Experience, Operations, and Communications teams. Full ownership of Orientation Week and Impact Awards, from promotional strategy and logistics to on-site execution. Tracking campaign data in real time to adjust and improve.',
+    type: 'Marketing and Events',
+    typeKey: 'events',
+    color: '#d4834a',
+    highlight: '19,000+ students reached across campaigns',
   },
   {
     per: 'Oct 2024 to Present',
     role: 'Founder',
-    co: 'Event Tree, Dalhousie University — Halifax, NS',
-    desc: 'Identified a gap in campus event discovery for Dalhousie\'s student body and built a platform from the ground up without institutional support. Designed the concept, branding, marketing campaigns, platform structure, and UX — prioritizing accessibility and student engagement.',
+    co: 'Event Tree, Dalhousie University',
+    desc: 'Spotted a gap in how Dalhousie students discover campus events and built a platform from nothing to fill it. Handled the concept, branding, UX, and promotion strategy independently, with student accessibility as the core priority.',
+    type: 'Entrepreneur',
+    typeKey: 'founder',
+    color: '#9f8fcc',
+    highlight: 'Built and launched a campus platform from scratch',
   },
   {
-    per: 'Mar 2024 · Jan 2026',
+    per: 'Mar 2024 and Jan 2026',
     role: 'Research Assistant',
-    co: 'Atlantic Personnel Selection Lab, Saint Mary\'s University — Halifax, NS',
-    desc: 'Worked alongside senior researchers on assessment studies, contributing to study design and participant evaluations. Scored and analyzed data for 60+ evaluations, managed large-scale datasets, and completed a comprehensive scoping review of 1,000+ academic articles.',
+    co: 'Atlantic Personnel Selection Lab, Saint Mary\'s University',
+    desc: 'Contributing to study design and participant evaluations alongside senior researchers. Scored and analyzed data for 60+ assessments, managed large datasets, and completed a scoping review covering more than 1,000 academic papers.',
+    type: 'Research',
+    typeKey: 'research',
+    color: '#5fa882',
+    highlight: '1,000+ papers reviewed, 60+ evaluations scored',
   },
   {
     per: 'Sept 2023 to May 2024',
-    role: 'Marketing / PR Director',
-    co: 'Dalhousie Science Society, Dalhousie University — Halifax, NS',
-    desc: 'Led marketing campaigns promoting 4+ events per semester and developed PR strategies that expanded the society\'s campus presence. Coordinated cross-functional team efforts in content creation, branding, and communication to ensure consistent messaging across all outreach.',
+    role: 'Marketing and PR Director',
+    co: 'Dalhousie Science Society',
+    desc: 'Led marketing campaigns for 4+ events per semester. Developed PR strategies that widened the society\'s campus reach and coordinated content creation, branding, and communications across a cross-functional team.',
+    type: 'Marketing and PR',
+    typeKey: 'marketing',
+    color: '#c4683f',
+    highlight: '4+ events promoted per semester',
   },
 ];
 
@@ -61,22 +85,22 @@ export const eventsData: EventItem[] = [
   {
     name: 'Dalhousie Orientation Week',
     date: 'August 2025',
-    desc: 'Took full ownership of promotional strategy, logistics coordination, and on-site execution for Dalhousie\'s flagship Orientation Week, reaching thousands of incoming students.',
+    desc: 'Full ownership of promotional strategy, logistics, and on-site execution for Dalhousie\'s flagship Orientation Week, reaching thousands of incoming students.',
   },
   {
     name: 'Impact Awards',
     date: '2025',
-    desc: 'Planned and delivered the Impact Awards ceremony for Dalhousie Student Affairs, managing end-to-end event production, communication, and on-the-day operations.',
+    desc: 'Planned and delivered the Impact Awards ceremony for Dalhousie Student Affairs, managing end-to-end production, communication, and on-the-day operations.',
   },
   {
-    name: 'Dalhousie Science Society Events',
+    name: 'Science Society Events',
     date: '2023 to 2024',
     desc: 'Led marketing and PR for 4+ Science Society events per semester, driving student engagement through social media strategy, campus partnerships, and cohesive visual branding.',
   },
   {
     name: 'Event Tree Platform Launch',
     date: 'Oct 2024',
-    desc: 'Founded and launched Event Tree, a campus event discovery platform for Dalhousie students — handling everything from concept and UX design to promotion strategy and rollout.',
+    desc: 'Founded and launched Event Tree, a campus event discovery platform for Dalhousie students. Handled concept, UX design, promotion strategy, and rollout from the ground up.',
   },
 ];
 
@@ -98,13 +122,13 @@ export const posts: Post[] = [
     tag: 'Events',
     title: 'Building Community: Lessons After 20 Events',
     date: 'February 2026',
-    exc: 'After three years of planning events of every scale, I keep coming back to the same question: what actually makes people feel welcome?',
+    exc: 'After three years of planning events of every scale, the same question keeps coming up: what actually makes people feel welcome?',
   },
   {
     tag: 'Reflection',
     title: 'The Underrated Skill in Any Creative Field',
     date: 'December 2025',
-    exc: 'It is not strategy, or aesthetics. It is knowing when to listen, and then genuinely doing it.',
+    exc: 'It is not strategy, or aesthetics. It is knowing when to listen, and then actually doing it.',
   },
 ];
 
@@ -112,9 +136,9 @@ export const skills: string[] = [
   'Social Media Strategy',
   'Event Management',
   'Content Creation',
-  'Marketing & PR',
+  'Marketing and PR',
   'Community Engagement',
-  'Canva & Figma',
+  'Canva and Figma',
   'Adobe Suite',
   'HubSpot',
   'Data Analysis',

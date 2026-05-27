@@ -57,7 +57,7 @@ export default function Hero(): JSX.Element {
         <div className="hero-foot">
           <p className="hero-role">
             Psychology student at Dalhousie. Marketer, event builder, and founder
-            — making things that genuinely connect with people.
+            who makes things that actually connect with people.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 0 }}>
             <div className="hero-scr">

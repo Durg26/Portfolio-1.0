@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { skills } from '../data/index';
 
 const FACTS: [string, string][] = [
-  ['Education', 'BA Psychology, Minor in Management — Dalhousie University (Expected Apr 2026)'],
-  ['Also', 'Study Abroad — National University of Singapore (2024 to 2025)'],
+  ['Education', 'BA Psychology, Minor in Management, Dalhousie University (Apr 2026)'],
+  ['Also', 'Study Abroad, National University of Singapore (2024 to 2025)'],
   ['Based in', 'Halifax, Nova Scotia'],
   ['Focus', 'Marketing · Events · Community Engagement'],
   ['Languages', 'English · Hindi · Telugu'],
@@ -48,17 +48,17 @@ export default function About(): JSX.Element {
                 Serious about craft.
               </p>
               <p className="about-body">
-                A BA Psychology student at Dalhousie University (expected April 2026), with a Minor
-                in Management and a Certificate in Innovation and Entrepreneurship. I spent a year
-                studying abroad at the National University of Singapore — broadening how I think
-                about people, culture, and what makes ideas travel.
+                BA Psychology student at Dalhousie, graduating April 2026. Minoring in Management
+                with a Certificate in Innovation and Entrepreneurship, and spent a year studying at
+                the National University of Singapore, which changed how I think about people,
+                culture, and what makes ideas actually travel.
               </p>
               <br />
               <p className="about-body">
-                I work at the intersection of people and strategy — whether that is running campaigns
-                for 19,000+ students, building a campus platform from scratch, or growing an
-                Instagram account to 1K+ followers without a single paid post. The through-line is
-                always the same: genuine connection over noise.
+                My work sits at the corner of marketing, community, and curiosity. Running campaigns
+                for 19,000+ students, growing a brand's Instagram to 1K+ with no paid budget, or
+                building a platform from nothing. What ties it together is a background in
+                psychology and a habit of asking why before how.
               </p>
               <div className="skills-wrap" ref={skillsRef}>
                 {skills.map((s, i) => (
