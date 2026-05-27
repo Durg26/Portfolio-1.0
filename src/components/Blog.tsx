@@ -51,27 +51,27 @@ function BlogCard({ tag, title, date, exc, slug, index }: BlogCardProps): JSX.El
       viewport={{ once: true }}
       transition={{ duration: 0.65, delay: index * 0.08 }}
     >
-      <div
-        className="bc"
-        ref={cardRef}
-        onMouseMove={onMouseMove}
-        onMouseLeave={onMouseLeave}
-        style={{ position: 'relative', transformStyle: 'preserve-3d' }}
-      >
-        <div className="tilt-highlight" />
-        <div className="bi">
-          <div className="bi-in">
-            <Placeholder dark={false} />
+      <Link to={`/blog/${slug}`} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
+        <div
+          className="bc"
+          ref={cardRef}
+          onMouseMove={onMouseMove}
+          onMouseLeave={onMouseLeave}
+          style={{ position: 'relative', transformStyle: 'preserve-3d' }}
+        >
+          <div className="tilt-highlight" />
+          <div className="bi">
+            <div className="bi-in">
+              <Placeholder dark={false} />
+            </div>
           </div>
+          <span className="b-tag">{tag}</span>
+          <h3 className="b-title">{title}</h3>
+          <span className="b-date">{date}</span>
+          <p className="b-exc">{exc}</p>
+          <span className="b-read">Read more →</span>
         </div>
-        <span className="b-tag">{tag}</span>
-        <h3 className="b-title">{title}</h3>
-        <span className="b-date">{date}</span>
-        <p className="b-exc">{exc}</p>
-        <Link to={`/blog/${slug}`} className="b-read">
-          Read more
-        </Link>
-      </div>
+      </Link>
     </motion.div>
   );
 }
