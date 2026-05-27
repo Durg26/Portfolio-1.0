@@ -7,10 +7,10 @@ interface StatItem {
 }
 
 const STATS: StatItem[] = [
-  { n: 20, s: '+', l: 'Events Managed' },
-  { n: 3, s: '+', l: 'Years Experience' },
-  { n: 1000, s: '+', l: 'People Reached' },
-  { n: 6, s: '', l: 'Certifications' },
+  { n: 19000, s: '+', l: 'Students Reached' },
+  { n: 5, s: '', l: 'Roles Held' },
+  { n: 1000, s: '+', l: 'Instagram Followers' },
+  { n: 4, s: '', l: 'Certifications' },
 ];
 
 function StatNum({ to, suf }: { to: number; suf: string }): JSX.Element {

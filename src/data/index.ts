@@ -26,61 +26,65 @@ export interface Post {
 
 export const experiences: Experience[] = [
   {
-    per: 'Jan 2024 to Present',
-    role: 'Marketing and Communications Coordinator',
-    co: 'Your Organization, Halifax NS',
-    desc: 'Leading marketing strategy, content creation, and community outreach. Managing social media presence and coordinating campaigns that grow audience engagement and drive meaningful participation.',
+    per: 'Oct 2025 to Present',
+    role: 'Social Media Coordinator',
+    co: 'Abstract Cafe, Dalhousie Student Union — Halifax, NS',
+    desc: 'Managing end-to-end content strategy for the cafe\'s Instagram, growing the account to 1K+ followers and 5K+ views organically without paid promotion. Designing menus, pricing materials, and branded content while monitoring performance through Instagram Insights to optimize posting strategy.',
   },
   {
-    per: 'Sep 2022 to Apr 2024',
-    role: 'Event Coordinator',
-    co: 'Dalhousie Student Union, Halifax NS',
-    desc: 'Planned and executed campus-wide events with 200 to 1,000+ attendees. Managed vendor relationships, logistics, budgeting, and volunteer teams across a full academic-year calendar.',
+    per: 'Aug 2025 to Present',
+    role: 'Campus Engagement Assistant (CEA)',
+    co: 'Student Affairs, Dalhousie University — Halifax, NS',
+    desc: 'Executing multi-channel campaigns reaching 19,000+ students in collaboration with Student Experience, Operations, and Communications teams. Planning and delivering high-impact campus events including Orientation Week and Impact Awards, with full ownership of promotional strategy, logistics coordination, and on-site execution.',
   },
   {
-    per: 'Jun 2023 to Dec 2023',
-    role: 'Community Outreach Lead',
-    co: 'Your Organization, Halifax NS',
-    desc: 'Developed outreach programs connecting students with mental health resources and community services. Facilitated workshops and built partnerships with local organizations across Halifax.',
+    per: 'Oct 2024 to Present',
+    role: 'Founder',
+    co: 'Event Tree, Dalhousie University — Halifax, NS',
+    desc: 'Identified a gap in campus event discovery for Dalhousie\'s student body and built a platform from the ground up without institutional support. Designed the concept, branding, marketing campaigns, platform structure, and UX — prioritizing accessibility and student engagement.',
   },
   {
-    per: 'Sep 2021 to Apr 2022',
-    role: 'Marketing Volunteer',
-    co: 'Campus Community Initiative, Halifax NS',
-    desc: 'Created content and managed social channels for a student-run community initiative. Grew Instagram following by 40% over one semester through consistent storytelling.',
+    per: 'Mar 2024 · Jan 2026',
+    role: 'Research Assistant',
+    co: 'Atlantic Personnel Selection Lab, Saint Mary\'s University — Halifax, NS',
+    desc: 'Worked alongside senior researchers on assessment studies, contributing to study design and participant evaluations. Scored and analyzed data for 60+ evaluations, managed large-scale datasets, and completed a comprehensive scoping review of 1,000+ academic articles.',
+  },
+  {
+    per: 'Sept 2023 to May 2024',
+    role: 'Marketing / PR Director',
+    co: 'Dalhousie Science Society, Dalhousie University — Halifax, NS',
+    desc: 'Led marketing campaigns promoting 4+ events per semester and developed PR strategies that expanded the society\'s campus presence. Coordinated cross-functional team efforts in content creation, branding, and communication to ensure consistent messaging across all outreach.',
   },
 ];
 
 export const eventsData: EventItem[] = [
   {
     name: 'Dalhousie Orientation Week',
-    date: 'September 2023',
-    desc: 'Coordinated a week-long orientation for 800+ incoming students across 12 events, from campus tours to evening socials.',
+    date: 'August 2025',
+    desc: 'Took full ownership of promotional strategy, logistics coordination, and on-site execution for Dalhousie\'s flagship Orientation Week, reaching thousands of incoming students.',
   },
   {
-    name: 'Halifax Community Forum',
-    date: 'March 2023',
-    desc: 'Organized a public forum bringing together community leaders, student groups, and local organizations to discuss mental health access.',
+    name: 'Impact Awards',
+    date: '2025',
+    desc: 'Planned and delivered the Impact Awards ceremony for Dalhousie Student Affairs, managing end-to-end event production, communication, and on-the-day operations.',
   },
   {
-    name: 'Annual Fundraiser Gala',
-    date: 'November 2022',
-    desc: 'Managed a formal fundraising event that raised over $15,000 for mental health awareness programs in Atlantic Canada.',
+    name: 'Dalhousie Science Society Events',
+    date: '2023 to 2024',
+    desc: 'Led marketing and PR for 4+ Science Society events per semester, driving student engagement through social media strategy, campus partnerships, and cohesive visual branding.',
   },
   {
-    name: 'Marketing and Brand Workshop',
-    date: 'February 2024',
-    desc: 'Hosted a professional development workshop for 60 participants covering brand storytelling, content strategy, and digital presence.',
+    name: 'Event Tree Platform Launch',
+    date: 'Oct 2024',
+    desc: 'Founded and launched Event Tree, a campus event discovery platform for Dalhousie students — handling everything from concept and UX design to promotion strategy and rollout.',
   },
 ];
 
 export const certs: Cert[] = [
-  { name: 'Google Digital Marketing and E-commerce Certificate', iss: 'Google', date: '2024' },
-  { name: 'Mental Health First Aid', iss: 'Mental Health Commission of Canada', date: '2023' },
-  { name: 'Event Planning Fundamentals', iss: 'Canadian Institute of Planners', date: '2023' },
-  { name: 'Social Media Marketing Professional', iss: 'Meta Blueprint', date: '2024' },
-  { name: 'Community Engagement Practitioner', iss: 'IAP2 Canada', date: '2023' },
-  { name: 'Project Management Essentials', iss: 'Project Management Institute', date: '2024' },
+  { name: 'Google Analytics 4', iss: 'Google', date: '2024' },
+  { name: 'Google Ads Search', iss: 'Google', date: '2024' },
+  { name: 'HubSpot Reporting', iss: 'HubSpot Academy', date: '2024' },
+  { name: 'HubSpot Digital Advertising', iss: 'HubSpot Academy', date: '2024' },
 ];
 
 export const posts: Post[] = [
@@ -105,14 +109,16 @@ export const posts: Post[] = [
 ];
 
 export const skills: string[] = [
+  'Social Media Strategy',
   'Event Management',
-  'Community Building',
-  'Marketing Strategy',
-  'Social Media',
   'Content Creation',
-  'Photography',
+  'Marketing & PR',
+  'Community Engagement',
+  'Canva & Figma',
+  'Adobe Suite',
+  'HubSpot',
+  'Data Analysis',
+  'Research',
+  'Branding',
   'Psychology',
-  'Project Planning',
-  'Copywriting',
-  'Videography',
 ];

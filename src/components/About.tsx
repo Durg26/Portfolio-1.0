@@ -3,9 +3,10 @@ import { motion } from 'framer-motion';
 import { skills } from '../data/index';
 
 const FACTS: [string, string][] = [
-  ['Education', "BSc Psychology, Dalhousie University '26"],
+  ['Education', 'BA Psychology, Minor in Management — Dalhousie University (Expected Apr 2026)'],
+  ['Also', 'Study Abroad — National University of Singapore (2024 to 2025)'],
   ['Based in', 'Halifax, Nova Scotia'],
-  ['Focus', 'Event Management · Community · Marketing'],
+  ['Focus', 'Marketing · Events · Community Engagement'],
   ['Languages', 'English · Hindi · Telugu'],
   ['Status', 'Open to new opportunities'],
 ];
@@ -47,16 +48,17 @@ export default function About(): JSX.Element {
                 Serious about craft.
               </p>
               <p className="about-body">
-                A recent BSc Psychology graduate from Dalhousie University, based in Halifax, Nova
-                Scotia. My background in human behaviour shapes how I approach every project, whether
-                that is designing an event experience, writing campaign copy, or building community
-                programming that actually lands.
+                A BA Psychology student at Dalhousie University (expected April 2026), with a Minor
+                in Management and a Certificate in Innovation and Entrepreneurship. I spent a year
+                studying abroad at the National University of Singapore — broadening how I think
+                about people, culture, and what makes ideas travel.
               </p>
               <br />
               <p className="about-body">
-                I am drawn to work at the intersection of people and strategy. The best events,
-                campaigns, and communities share a common thread: they make people feel like they
-                belong somewhere.
+                I work at the intersection of people and strategy — whether that is running campaigns
+                for 19,000+ students, building a campus platform from scratch, or growing an
+                Instagram account to 1K+ followers without a single paid post. The through-line is
+                always the same: genuine connection over noise.
               </p>
               <div className="skills-wrap" ref={skillsRef}>
                 {skills.map((s, i) => (
