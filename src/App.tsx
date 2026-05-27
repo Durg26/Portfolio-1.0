@@ -17,6 +17,7 @@ import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BlogPost from './pages/BlogPost';
+import EventPost from './pages/EventPost';
 
 const DARK_SECTION_IDS = new Set(['sw', 'experience', 'media', 'contact']);
 
@@ -158,6 +159,7 @@ export default function App(): JSX.Element {
     <Routes>
       <Route path="/" element={<PortfolioHome />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
+      <Route path="/event/:slug" element={<EventPost />} />
     </Routes>
   );
 }

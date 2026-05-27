@@ -1,4 +1,5 @@
 import { useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { eventsData } from '../data/index';
 import Placeholder from './Placeholder';
@@ -7,10 +8,11 @@ interface EventCardProps {
   name: string;
   date: string;
   desc: string;
+  slug: string;
   index: number;
 }
 
-function EventCard({ name, date, desc, index }: EventCardProps): JSX.Element {
+function EventCard({ name, date, desc, slug, index }: EventCardProps): JSX.Element {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -48,25 +50,27 @@ function EventCard({ name, date, desc, index }: EventCardProps): JSX.Element {
       viewport={{ once: true }}
       transition={{ duration: 0.65, delay: index * 0.08 }}
     >
-      <div
-        className="ev-card"
-        ref={cardRef}
-        onMouseMove={onMouseMove}
-        onMouseLeave={onMouseLeave}
-        style={{ transformStyle: 'preserve-3d' }}
-      >
-        <div className="tilt-highlight" />
-        <div className="ev-img">
-          <Placeholder dark={false} label="Drop photo here" />
-        </div>
-        <div className="ev-body">
-          <div className="ev-num">
-            {String(index + 1).padStart(2, '0')} / {date}
+      <Link to={`/event/${slug}`} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
+        <div
+          className="ev-card"
+          ref={cardRef}
+          onMouseMove={onMouseMove}
+          onMouseLeave={onMouseLeave}
+          style={{ transformStyle: 'preserve-3d' }}
+        >
+          <div className="tilt-highlight" />
+          <div className="ev-img">
+            <Placeholder dark={false} label="Drop photo here" />
           </div>
-          <div className="ev-name">{name}</div>
-          <p className="ev-desc">{desc}</p>
+          <div className="ev-body">
+            <div className="ev-num">
+              {String(index + 1).padStart(2, '0')} / {date}
+            </div>
+            <div className="ev-name">{name}</div>
+            <p className="ev-desc">{desc}</p>
+          </div>
         </div>
-      </div>
+      </Link>
     </motion.div>
   );
 }
@@ -79,7 +83,7 @@ export default function Events(): JSX.Element {
         <h2 className="st">Events I&apos;ve Managed</h2>
         <div className="ev-grid">
           {eventsData.map((e, i) => (
-            <EventCard key={i} name={e.name} date={e.date} desc={e.desc} index={i} />
+            <EventCard key={i} name={e.name} date={e.date} desc={e.desc} slug={e.slug} index={i} />
           ))}
         </div>
       </section>

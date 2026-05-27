@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useMagnetic } from '../hooks/useMagnetic';
 
 interface NavProps {
@@ -44,45 +45,79 @@ function SunIcon(): JSX.Element {
 }
 
 export default function Nav({ active, scrolled, onDark, theme, onToggleTheme }: NavProps): JSX.Element {
+  const [menuOpen, setMenuOpen] = useState(false);
   const magnetic = useMagnetic<HTMLAnchorElement>(12);
 
   const navClass = [
     'nav',
     scrolled ? 'scrolled' : '',
     onDark && !scrolled ? 'on-dark' : '',
-  ]
-    .filter(Boolean)
-    .join(' ');
+  ].filter(Boolean).join(' ');
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <nav className={navClass}>
-      <div className="nav-inner">
-        <a href="#" className="nav-name">Abhinav D.</a>
-        <div className="nav-links">
+    <>
+      <nav className={navClass}>
+        <div className="nav-inner">
+          <a href="#" className="nav-name" onClick={closeMenu}>Abhinav D.</a>
+          <div className="nav-links">
+            {NAV_LINKS.map(([id, lbl]) => (
+              <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}>
+                {lbl}
+              </a>
+            ))}
+            <a
+              href="/resume.pdf"
+              download
+              className="nav-resume"
+              ref={magnetic.ref}
+              onMouseMove={magnetic.onMouseMove}
+              onMouseLeave={magnetic.onMouseLeave}
+            >
+              Resume ↓
+            </a>
+            <button
+              className="nav-theme-btn"
+              onClick={onToggleTheme}
+              aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+            >
+              {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+            </button>
+          </div>
+          <button
+            className="nav-ham"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+          >
+            <span className={`ham-l top${menuOpen ? ' open' : ''}`} />
+            <span className={`ham-l mid${menuOpen ? ' open' : ''}`} />
+            <span className={`ham-l bot${menuOpen ? ' open' : ''}`} />
+          </button>
+        </div>
+      </nav>
+      {menuOpen && (
+        <div className="mob-menu" role="dialog" aria-label="Navigation menu">
           {NAV_LINKS.map(([id, lbl]) => (
-            <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}>
+            <a
+              key={id}
+              href={`#${id}`}
+              className={`mob-link${active === id ? ' active' : ''}`}
+              onClick={closeMenu}
+            >
               {lbl}
             </a>
           ))}
-          <a
-            href="/resume.pdf"
-            download
-            className="nav-resume"
-            ref={magnetic.ref}
-            onMouseMove={magnetic.onMouseMove}
-            onMouseLeave={magnetic.onMouseLeave}
-          >
+          <a href="/resume.pdf" download className="mob-resume" onClick={closeMenu}>
             Resume ↓
           </a>
-          <button
-            className="nav-theme-btn"
-            onClick={onToggleTheme}
-            aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-          >
+          <button className="mob-theme" onClick={() => { onToggleTheme(); closeMenu(); }}>
             {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+            <span>{theme === 'light' ? 'Dark mode' : 'Light mode'}</span>
           </button>
         </div>
-      </div>
-    </nav>
+      )}
+    </>
   );
 }

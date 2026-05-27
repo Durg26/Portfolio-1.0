@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react';
+import { photos } from '../data/index';
 import Placeholder from './Placeholder';
 import Lightbox from './Lightbox';
-
-const WIDTHS = [240, 340, 280, 260, 320, 240, 300, 340];
 
 export default function Photos(): JSX.Element {
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -28,14 +27,7 @@ export default function Photos(): JSX.Element {
     scrollRef.current.scrollLeft = scrollLeft.current - walk * 1.4;
   };
 
-  const onUp = (): void => {
-    isDragging.current = false;
-    setDragging(false);
-  };
-
-  const onItemClick = (i: number): void => {
-    setLightboxIndex(i);
-  };
+  const onUp = (): void => { isDragging.current = false; setDragging(false); };
 
   return (
     <div id="photos" style={{ background: 'var(--sand)' }}>
@@ -43,56 +35,30 @@ export default function Photos(): JSX.Element {
         <span className="lbl lbl-rust">Photos</span>
         <h2 className="st">Moments</h2>
       </div>
-      <div
-        className={`dso${dragging ? ' dg' : ''}`}
-        ref={scrollRef}
-        onMouseDown={onDown}
-        onMouseMove={onMove}
-        onMouseUp={onUp}
-        onMouseLeave={onUp}
-        onTouchStart={onDown}
-        onTouchMove={onMove}
-        onTouchEnd={onUp}
-      >
+      <div className={`dso${dragging ? ' dg' : ''}`} ref={scrollRef}
+        onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}
+        onTouchStart={onDown} onTouchMove={onMove} onTouchEnd={onUp}>
         <div className="ds">
-          {WIDTHS.map((w, i) => (
-            <div
-              key={i}
-              className="sp"
-              style={{ width: w }}
-              onClick={() => onItemClick(i)}
-              role="button"
-              tabIndex={0}
-              aria-label={`Open photo ${i + 1}`}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') onItemClick(i);
-              }}
-            >
-              <Placeholder dark={false} label="Drop photo here" />
+          {photos.map((photo, i) => (
+            <div key={i} className="sp" style={{ width: photo.width }}
+              onClick={() => setLightboxIndex(i)} role="button" tabIndex={0}
+              aria-label={photo.alt || `Photo ${i + 1}`}
+              onKeyDown={(e) => { if (e.key === 'Enter') setLightboxIndex(i); }}>
+              {photo.src ? (
+                <img src={photo.src} alt={photo.alt || ''} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', userSelect: 'none', pointerEvents: 'none' }} draggable={false} />
+              ) : (
+                <Placeholder dark={false} label="Add photo in data/index.ts" />
+              )}
               <div className="ph-tint" />
             </div>
           ))}
         </div>
       </div>
-      <p className="drag-hint" style={{ background: 'var(--sand)' }}>
-        Drag to explore
-      </p>
+      <p className="drag-hint" style={{ background: 'var(--sand)' }}>Drag to explore</p>
       {lightboxIndex !== null && (
-        <Lightbox
-          total={WIDTHS.length}
-          index={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-          onPrev={() =>
-            setLightboxIndex((prev) =>
-              prev !== null ? (prev - 1 + WIDTHS.length) % WIDTHS.length : 0
-            )
-          }
-          onNext={() =>
-            setLightboxIndex((prev) =>
-              prev !== null ? (prev + 1) % WIDTHS.length : 0
-            )
-          }
-        />
+        <Lightbox total={photos.length} index={lightboxIndex} onClose={() => setLightboxIndex(null)}
+          onPrev={() => setLightboxIndex((p) => (p !== null ? (p - 1 + photos.length) % photos.length : 0))}
+          onNext={() => setLightboxIndex((p) => (p !== null ? (p + 1) % photos.length : 0))} />
       )}
     </div>
   );
