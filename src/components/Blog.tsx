@@ -1,4 +1,5 @@
 import { useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { posts } from '../data/index';
 import Placeholder from './Placeholder';
@@ -8,10 +9,11 @@ interface BlogCardProps {
   title: string;
   date: string;
   exc: string;
+  slug: string;
   index: number;
 }
 
-function BlogCard({ tag, title, date, exc, index }: BlogCardProps): JSX.Element {
+function BlogCard({ tag, title, date, exc, slug, index }: BlogCardProps): JSX.Element {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -66,9 +68,9 @@ function BlogCard({ tag, title, date, exc, index }: BlogCardProps): JSX.Element 
         <h3 className="b-title">{title}</h3>
         <span className="b-date">{date}</span>
         <p className="b-exc">{exc}</p>
-        <a href="#" className="b-read">
+        <Link to={`/blog/${slug}`} className="b-read">
           Read more
-        </a>
+        </Link>
       </div>
     </motion.div>
   );
@@ -88,6 +90,7 @@ export default function Blog(): JSX.Element {
               title={p.title}
               date={p.date}
               exc={p.exc}
+              slug={p.slug}
               index={i}
             />
           ))}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Cursor from './components/Cursor';
 import LoadingScreen from './components/LoadingScreen';
 import ScrollProgress from './components/ScrollProgress';
@@ -15,10 +16,11 @@ import Media from './components/Media';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import BlogPost from './pages/BlogPost';
 
 const DARK_SECTION_IDS = new Set(['hero', 'sw', 'experience', 'media', 'contact']);
 
-export default function App(): JSX.Element {
+function PortfolioHome(): JSX.Element {
   const [loading, setLoading] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       return !sessionStorage.getItem('portfolio_loaded');
@@ -36,13 +38,11 @@ export default function App(): JSX.Element {
   });
   const [konamiVisible, setKonamiVisible] = useState<boolean>(false);
 
-  // Apply theme to html element
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('portfolio_theme', theme);
   }, [theme]);
 
-  // Loading screen timer
   useEffect(() => {
     if (!loading) return;
     const t = setTimeout(() => {
@@ -52,7 +52,6 @@ export default function App(): JSX.Element {
     return () => clearTimeout(t);
   }, [loading]);
 
-  // Scroll / active section / dark detection
   useEffect(() => {
     const sectionIds = ['about', 'experience', 'events', 'photos', 'certifications', 'media', 'blog', 'contact'];
     const allIds = ['hero', 'sw', ...sectionIds];
@@ -94,7 +93,6 @@ export default function App(): JSX.Element {
     };
   }, []);
 
-  // Konami code easter egg
   useEffect(() => {
     const sequence = [
       'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
@@ -152,5 +150,14 @@ export default function App(): JSX.Element {
         <div className="konami-toast show">You found it. Impressive.</div>
       )}
     </>
+  );
+}
+
+export default function App(): JSX.Element {
+  return (
+    <Routes>
+      <Route path="/" element={<PortfolioHome />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
+    </Routes>
   );
 }

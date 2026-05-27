@@ -26,6 +26,8 @@ export interface Post {
   title: string;
   date: string;
   exc: string;
+  slug: string;
+  readingTime: number;
 }
 
 export const experiences: Experience[] = [
@@ -36,7 +38,7 @@ export const experiences: Experience[] = [
     desc: 'Running the full content pipeline for the cafe\'s Instagram: planning, scheduling, audience targeting, and performance review through Instagram Insights. Designing menus, pricing materials, and branded content that keeps the account growing without any paid promotion.',
     type: 'Social Media',
     typeKey: 'social',
-    color: '#c4683f',
+    color: '#995F2F',
     highlight: '1K+ followers and 5K+ views, zero paid spend',
   },
   {
@@ -46,7 +48,7 @@ export const experiences: Experience[] = [
     desc: 'Running multi-channel campaigns across Student Experience, Operations, and Communications teams. Full ownership of Orientation Week and Impact Awards, from promotional strategy and logistics to on-site execution. Tracking campaign data in real time to adjust and improve.',
     type: 'Marketing and Events',
     typeKey: 'events',
-    color: '#d4834a',
+    color: '#b87a3a',
     highlight: '19,000+ students reached across campaigns',
   },
   {
@@ -56,7 +58,7 @@ export const experiences: Experience[] = [
     desc: 'Spotted a gap in how Dalhousie students discover campus events and built a platform from nothing to fill it. Handled the concept, branding, UX, and promotion strategy independently, with student accessibility as the core priority.',
     type: 'Entrepreneur',
     typeKey: 'founder',
-    color: '#9f8fcc',
+    color: '#978F66',
     highlight: 'Built and launched a campus platform from scratch',
   },
   {
@@ -66,7 +68,7 @@ export const experiences: Experience[] = [
     desc: 'Contributing to study design and participant evaluations alongside senior researchers. Scored and analyzed data for 60+ assessments, managed large datasets, and completed a scoping review covering more than 1,000 academic papers.',
     type: 'Research',
     typeKey: 'research',
-    color: '#5fa882',
+    color: '#978F66',
     highlight: '1,000+ papers reviewed, 60+ evaluations scored',
   },
   {
@@ -76,7 +78,7 @@ export const experiences: Experience[] = [
     desc: 'Led marketing campaigns for 4+ events per semester. Developed PR strategies that widened the society\'s campus reach and coordinated content creation, branding, and communications across a cross-functional team.',
     type: 'Marketing and PR',
     typeKey: 'marketing',
-    color: '#c4683f',
+    color: '#995F2F',
     highlight: '4+ events promoted per semester',
   },
 ];
@@ -117,18 +119,24 @@ export const posts: Post[] = [
     title: 'What Studying Human Behaviour Taught Me About Campaigns',
     date: 'April 2026',
     exc: 'The same principles that explain why people form habits also explain why some marketing works and most does not.',
+    slug: 'what-studying-human-behaviour-taught-me',
+    readingTime: 5,
   },
   {
     tag: 'Events',
     title: 'Building Community: Lessons After 20 Events',
     date: 'February 2026',
     exc: 'After three years of planning events of every scale, the same question keeps coming up: what actually makes people feel welcome?',
+    slug: 'building-community-lessons-after-20-events',
+    readingTime: 6,
   },
   {
     tag: 'Reflection',
     title: 'The Underrated Skill in Any Creative Field',
     date: 'December 2025',
     exc: 'It is not strategy, or aesthetics. It is knowing when to listen, and then actually doing it.',
+    slug: 'the-underrated-skill-in-any-creative-field',
+    readingTime: 4,
   },
 ];
 

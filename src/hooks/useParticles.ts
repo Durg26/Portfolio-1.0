@@ -57,7 +57,7 @@ export function useParticles(ref: MutableRefObject<HTMLCanvasElement | null>): v
         p.y = (p.y + p.vy + canvas.height) % canvas.height;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(196,104,63,.56)';
+        ctx.fillStyle = 'rgba(153,95,47,.56)';
         ctx.fill();
       }
 
@@ -70,7 +70,7 @@ export function useParticles(ref: MutableRefObject<HTMLCanvasElement | null>): v
             ctx.beginPath();
             ctx.moveTo(pts[i].x, pts[i].y);
             ctx.lineTo(pts[j].x, pts[j].y);
-            ctx.strokeStyle = `rgba(196,104,63,${0.14 * (1 - d / 112)})`;
+            ctx.strokeStyle = `rgba(153,95,47,${0.14 * (1 - d / 112)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
