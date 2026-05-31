@@ -4,6 +4,7 @@ import mdx from '@mdx-js/rollup'
 import remarkFrontmatter from 'remark-frontmatter'
 
 export default defineConfig({
+  base: '/portfolio-1.0/',
   plugins: [
     mdx({ remarkPlugins: [remarkFrontmatter] }),
     react(),
