@@ -19,7 +19,9 @@ const CONTACT_INFO: [string, string, string | null][] = [
   ['Email', 'd.abhinav12@gmail.com', 'mailto:d.abhinav12@gmail.com'],
   ['Location', 'Halifax, Nova Scotia', null],
   ['LinkedIn', 'linkedin.com/in/abhinav-durgavarjhula', 'https://www.linkedin.com/in/abhinav-durgavarjhula/'],
-  ['Instagram', '@the.diarybylens', 'https://instagram.com/the.diarybylens'],
+  ['Photography', '@the.diarybylens', 'https://instagram.com/the.diarybylens'],
+  ['The Abstract Cafe', '@the.abstract.cafe', 'https://instagram.com/the.abstract.cafe'],
+  ['Latispanica', '@latispanica', 'https://instagram.com/latispanica'],
 ];
 
 function validateEmail(email: string): boolean {

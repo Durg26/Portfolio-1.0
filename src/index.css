@@ -186,6 +186,15 @@ h2.st{font-size:52px;line-height:1.05;margin-bottom:44px}
 .play-c{width:54px;height:54px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:background .25s,border-color .25s}
 .vc:hover .play-c{background:rgba(169,139,118,.22);border-color:var(--rust)}
 .vid-l{font-size:10px;color:rgba(255,255,255,.28);letter-spacing:.16em;text-transform:uppercase}
+.design-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.dg-it{display:flex;flex-direction:column;gap:10px;cursor:pointer}
+.dg-img{aspect-ratio:4/5;overflow:hidden;position:relative;background:rgba(255,255,255,.05)}
+.dg-img img{transition:transform .45s ease}
+.dg-it:hover .dg-img img{transform:scale(1.05)}
+.dg-it:hover .ph-tint{opacity:1}
+.dg-meta{display:flex;flex-direction:column;gap:3px}
+.dg-label{font-size:14px;color:#F0E4D0;font-family:var(--font-serif)}
+.dg-client{font-size:11px;color:rgba(240,228,208,.4);letter-spacing:.1em;text-transform:uppercase}
 
 /* Blog */
 .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}

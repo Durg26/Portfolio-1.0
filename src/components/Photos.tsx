@@ -58,7 +58,9 @@ export default function Photos(): JSX.Element {
       {lightboxIndex !== null && (
         <Lightbox total={photos.length} index={lightboxIndex} onClose={() => setLightboxIndex(null)}
           onPrev={() => setLightboxIndex((p) => (p !== null ? (p - 1 + photos.length) % photos.length : 0))}
-          onNext={() => setLightboxIndex((p) => (p !== null ? (p + 1) % photos.length : 0))} />
+          onNext={() => setLightboxIndex((p) => (p !== null ? (p + 1) % photos.length : 0))}
+          srcs={photos.map((p) => p.src)}
+          alts={photos.map((p) => p.alt)} />
       )}
     </div>
   );

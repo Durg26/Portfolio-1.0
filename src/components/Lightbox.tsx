@@ -7,9 +7,11 @@ interface LightboxProps {
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
+  srcs?: string[];
+  alts?: string[];
 }
 
-export default function Lightbox({ total, index, onClose, onPrev, onNext }: LightboxProps): JSX.Element {
+export default function Lightbox({ total, index, onClose, onPrev, onNext, srcs, alts }: LightboxProps): JSX.Element {
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -60,9 +62,17 @@ export default function Lightbox({ total, index, onClose, onPrev, onNext }: Ligh
       <div
         className="lightbox-inner"
         onClick={(e) => e.stopPropagation()}
-        style={{ width: 'min(640px, 90vw)', height: 'min(480px, 80vh)' }}
+        style={{ width: 'min(720px, 92vw)', height: 'min(600px, 85vh)' }}
       >
-        <Placeholder dark label={`Photo ${index + 1} of ${total}`} />
+        {srcs && srcs[index] ? (
+          <img
+            src={srcs[index]}
+            alt={alts?.[index] || `Photo ${index + 1} of ${total}`}
+            style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+          />
+        ) : (
+          <Placeholder dark label={`Photo ${index + 1} of ${total}`} />
+        )}
       </div>
     </div>
   );
