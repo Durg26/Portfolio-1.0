@@ -1,3 +1,8 @@
+// =============================================================================
+// PORTFOLIO CONTENT — edit this file to update most sections of the site.
+// After saving, push to GitHub and the site redeploys automatically (~1 min).
+// =============================================================================
+
 export interface Experience {
   per: string;
   role: string;
@@ -31,6 +36,11 @@ export interface Post {
   readingTime: number;
 }
 
+// =============================================================================
+// EXPERIENCE — shown in the Experience section, newest first.
+// color: hex accent shown on the card edge.
+// highlight: bold one-liner shown at the bottom of the card.
+// =============================================================================
 export const experiences: Experience[] = [
   {
     per: 'Oct 2025 to Present',
@@ -84,6 +94,11 @@ export const experiences: Experience[] = [
   },
 ];
 
+// =============================================================================
+// EVENTS — shown in the "Events I Managed" section.
+// slug: must match both the filename in src/events/ AND the key in src/events/index.ts
+// To add a new event: see CONTENT.md → Adding a new event
+// =============================================================================
 export const eventsData: EventItem[] = [
   {
     name: 'Dalhousie Orientation Week',
@@ -111,13 +126,23 @@ export const eventsData: EventItem[] = [
   },
 ];
 
+// =============================================================================
+// CERTIFICATIONS — shown in the Certifications section.
+// Add a new line to show a new cert. Delete a line to remove it.
+// =============================================================================
 export const certs: Cert[] = [
   { name: 'Google Analytics 4', iss: 'Google', date: '2024' },
-  { name: 'Google Ads Search', iss: 'Google', date: '2024' },
+  { name: 'Google Ads Search', iss: 'Google', date: 'March 2026' },
   { name: 'HubSpot Reporting', iss: 'HubSpot Academy', date: '2024' },
   { name: 'HubSpot Digital Advertising', iss: 'HubSpot Academy', date: '2024' },
 ];
 
+// =============================================================================
+// BLOG POSTS — metadata shown on the blog cards.
+// slug: must match both the filename in src/posts/ AND the key in src/posts/index.ts
+// readingTime: estimated minutes (shown as "5 min read")
+// To add a new post: see CONTENT.md → Adding a new blog post
+// =============================================================================
 export const posts: Post[] = [
   {
     tag: 'Psychology and Marketing',
@@ -145,6 +170,10 @@ export const posts: Post[] = [
   },
 ];
 
+// =============================================================================
+// SKILLS — shown as animated tags in the About section.
+// Add, remove, or reorder freely.
+// =============================================================================
 export const skills: string[] = [
   'Social Media Strategy',
   'Event Management',
@@ -160,6 +189,13 @@ export const skills: string[] = [
   'Psychology',
 ];
 
+// =============================================================================
+// PHOTOS — shown in the draggable photo strip.
+// src: path to image file placed in public/photos/ — e.g. '/portfolio-1.0/photos/my-photo.jpg'
+// width: display width in pixels (varies to create a mosaic effect, 200–400 is a good range)
+// alt: brief description for accessibility
+// Leave src as '' to show a placeholder until you add the real image.
+// =============================================================================
 export interface PhotoItem {
   src: string;
   width: number;
@@ -177,6 +213,12 @@ export const photos: PhotoItem[] = [
   { src: '', width: 340, alt: 'Moment 8' },
 ];
 
+// =============================================================================
+// VIDEOS — shown in the Videography tab of Media.
+// youtubeId: the ID from the YouTube URL — e.g. for youtube.com/watch?v=dQw4w9WgXcQ use 'dQw4w9WgXcQ'
+// label: title shown on the thumbnail
+// Leave youtubeId as '' to show a placeholder.
+// =============================================================================
 export interface VideoItem {
   label: string;
   youtubeId: string;
@@ -188,6 +230,14 @@ export const videos: VideoItem[] = [
   { label: 'Film 03', youtubeId: '' },
 ];
 
+// =============================================================================
+// DESIGNS — shown in the Design Work tab of Media.
+// src: uses BASE_URL so paths stay correct on GitHub Pages.
+//   Image files go in public/designs/ — e.g. public/designs/my-poster.jpg
+//   The src here should be: `${base}designs/my-poster.jpg`
+// label: short title shown under the image
+// client: shown in smaller text below the label
+// =============================================================================
 export interface DesignItem {
   src: string;
   alt: string;
