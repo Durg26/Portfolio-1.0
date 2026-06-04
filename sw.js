@@ -1,5 +1,7 @@
-const CACHE_NAME = 'abhinav-portfolio-v1';
-const SHELL_URLS = ['/', '/index.html'];
+const CACHE_NAME = 'abhinav-portfolio-v2';
+// Paths are resolved relative to the service worker's own location,
+// so this works whether the site is served from / or a project sub-path.
+const SHELL_URLS = ['./', './index.html'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -18,9 +20,11 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  // Network-first for page navigations so a stale shell is never trapped;
+  // fall back to the cached shell only when offline.
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      caches.match('/index.html').then((cached) => cached || fetch(event.request))
+      fetch(event.request).catch(() => caches.match('./index.html', { ignoreSearch: true }))
     );
   }
 });
