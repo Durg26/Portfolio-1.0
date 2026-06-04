@@ -21,7 +21,7 @@ requestAnimationFrame(raf);
 // Register service worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {
+    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => {
       // SW registration failure is non-fatal
     });
   });
@@ -29,7 +29,7 @@ if ('serviceWorker' in navigator) {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter basename="/portfolio-1.0">
+    <BrowserRouter basename="/Portfolio-1.0">
       <App />
     </BrowserRouter>
   </React.StrictMode>

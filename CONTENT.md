@@ -44,8 +44,9 @@ After any change, commit and push — GitHub Actions redeploys in ~60 seconds.
 2. Upload it to `public/photos/`
 3. In `src/data/index.ts`, update an empty entry in `photos`:
    ```ts
-   { src: '/portfolio-1.0/photos/singapore-trip.jpg', width: 300, alt: 'Singapore trip' },
+   { src: '/Portfolio-1.0/photos/singapore-trip.jpg', width: 300, alt: 'Singapore trip' },
    ```
+   (The `/Portfolio-1.0/` prefix must match the repo name's exact capitalisation.)
    Or add a new line to the array. Width can be 200–400 — vary it to create the mosaic effect.
 4. To remove a photo, delete that line.
 
