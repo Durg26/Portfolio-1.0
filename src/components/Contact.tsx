@@ -13,7 +13,7 @@ interface FormErrors {
   message?: string;
 }
 
-const FORMSPREE_URL = 'https://formspree.io/f/xpwzwjqg';
+const CONTACT_EMAIL = 'd.abhinav12@gmail.com';
 
 const CONTACT_INFO: [string, string, string | null][] = [
   ['Email', 'd.abhinav12@gmail.com', 'mailto:d.abhinav12@gmail.com'],
@@ -34,9 +34,7 @@ export default function Contact(): JSX.Element {
   const [form, setForm] = useState<FormState>({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Partial<Record<keyof FormState, boolean>>>({});
-  const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
-  const [serverError, setServerError] = useState('');
 
   const validate = (field: keyof FormState, value: string): string => {
     if (!value.trim()) return 'This field is required';
@@ -58,7 +56,7 @@ export default function Contact(): JSX.Element {
     }
   };
 
-  const onSubmit = async (e: React.FormEvent): Promise<void> => {
+  const onSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     const newErrors: FormErrors = {};
     (Object.keys(form) as (keyof FormState)[]).forEach((f) => {
@@ -69,25 +67,12 @@ export default function Contact(): JSX.Element {
     setErrors(newErrors);
     if (Object.values(newErrors).some(Boolean)) return;
 
-    setLoading(true);
-    setServerError('');
-
-    try {
-      const res = await fetch(FORMSPREE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ name: form.name, email: form.email, message: form.message }),
-      });
-      if (res.ok) {
-        setSent(true);
-      } else {
-        setServerError('Something went wrong. Please try again.');
-      }
-    } catch {
-      setServerError('Could not send message. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+    const subject = encodeURIComponent(`Portfolio enquiry from ${form.name}`);
+    const body = encodeURIComponent(
+      `Hi Abhinav,\n\n${form.message}\n\n— ${form.name}\n${form.email}`
+    );
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    setSent(true);
   };
 
   return (
@@ -142,23 +127,18 @@ export default function Contact(): JSX.Element {
                 <span className="field-err">{errors.message}</span>
               )}
             </div>
-            {serverError && (
-              <p style={{ fontSize: 13, color: 'var(--rust)' }}>{serverError}</p>
-            )}
             {sent ? (
               <p style={{ fontSize: 15, color: 'var(--rust)' }}>
-                Thank you, I will be in touch soon.
+                Opening your email app — see you there.
               </p>
             ) : (
               <button
                 type="submit"
                 className="fs-btn"
-                disabled={loading}
                 ref={magnetic.ref}
                 onMouseMove={magnetic.onMouseMove}
                 onMouseLeave={magnetic.onMouseLeave}
               >
-                {loading && <span className="spinner" />}
                 Send Message
               </button>
             )}
