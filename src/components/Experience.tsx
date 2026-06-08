@@ -1,101 +1,43 @@
-import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { experiences } from '../data/index';
 
-const ICONS: Record<string, JSX.Element> = {
-  social: (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="11.5" cy="2.5" r="1.5"/>
-      <circle cx="2.5" cy="7" r="1.5"/>
-      <circle cx="11.5" cy="11.5" r="1.5"/>
-      <line x1="4" y1="6.2" x2="10" y2="3.5"/>
-      <line x1="4" y1="7.8" x2="10" y2="10.5"/>
-    </svg>
-  ),
-  events: (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-      <rect x="1" y="3" width="12" height="10" rx="1.5"/>
-      <line x1="4" y1="1" x2="4" y2="4"/>
-      <line x1="10" y1="1" x2="10" y2="4"/>
-      <line x1="1" y1="6.5" x2="13" y2="6.5"/>
-    </svg>
-  ),
-  founder: (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M7 1l1.5 3.2 3.5.5-2.5 2.45.59 3.46L7 8.9l-3.09 1.71.59-3.46L2 4.7l3.5-.5L7 1z"/>
-    </svg>
-  ),
-  research: (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-      <circle cx="5.8" cy="5.8" r="4.3"/>
-      <line x1="9.2" y1="9.2" x2="13" y2="13"/>
-    </svg>
-  ),
-  marketing: (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M2 6h2.5v4H2V6z"/>
-      <path d="M4.5 6L12 3.5v7L4.5 8V6z"/>
-      <path d="M12 7c.9.2 1.5.6 1.5 1.2S12.9 9.5 12 9.7"/>
-    </svg>
-  ),
-};
+const Spk = ({ size = 16 }: { size?: number }) => (
+  <svg style={{ width: size, height: size, flex: '0 0 auto' }} viewBox="0 0 100 100" fill="currentColor">
+    <path d="M50 4C55 36 64 45 96 50C64 55 55 64 50 96C45 64 36 55 4 50C36 45 45 36 50 4Z"/>
+  </svg>
+);
+
+const exps = [
+  { per: 'Oct 2025 — Present', role: 'Social Media Coordinator', co: 'Abstract Cafe · Dalhousie Student Union', desc: "Running the full content pipeline for the cafe's Instagram — planning, scheduling, audience targeting, and performance review through Instagram Insights. Designing menus, pricing materials, and branded content that keeps the account growing without any paid promotion.", hi: '1K+ followers & 5K+ views, zero paid spend' },
+  { per: 'Aug 2025 — Present', role: 'Campus Engagement Assistant', co: 'Student Affairs · Dalhousie University', desc: 'Running multi-channel campaigns across Student Experience, Operations, and Communications teams. Full ownership of Orientation Week and the Impact Awards, from promotional strategy and logistics to on-site execution. Tracking campaign data in real time to adjust and improve.', hi: '19,000+ students reached across campaigns' },
+  { per: 'Oct 2024 — Present', role: 'Founder', co: 'Event Tree · Dalhousie University', desc: 'Spotted a gap in how Dalhousie students discover campus events and built a platform from nothing to fill it. Handled the concept, branding, UX, and promotion strategy independently, with student accessibility as the core priority.', hi: 'Built & launched a campus platform from scratch' },
+  { per: 'Mar 2024 & Jan 2026', role: 'Research Assistant', co: "Atlantic Personnel Selection Lab · Saint Mary's University", desc: 'Contributing to study design and participant evaluations alongside senior researchers. Scored and analyzed data for 60+ assessments, managed large datasets, and completed a scoping review covering more than 1,000 academic papers.', hi: '1,000+ papers reviewed, 60+ evaluations scored' },
+  { per: 'Sept 2023 — May 2024', role: 'Marketing & PR Director', co: 'Dalhousie Science Society', desc: "Led marketing campaigns for 4+ events per semester. Developed PR strategies that widened the society's campus reach and coordinated content creation, branding, and communications across a cross-functional team.", hi: '4+ events promoted per semester' },
+];
 
 export default function Experience(): JSX.Element {
-  const lineRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = lineRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) { el.classList.add('drawn'); obs.disconnect(); }
-      },
-      { threshold: 0.05 }
-    );
-    obs.observe(el.parentElement!);
-    return () => obs.disconnect();
-  }, []);
-
   return (
-    <div className="full-bg" id="experience" style={{ background: 'var(--dark)' }} data-bg="dark">
-      <section className="sec">
-        <span className="lbl lbl-dim">Experience</span>
-        <h2 className="st lh">Work History</h2>
-        <div className="exp-timeline">
-          <div className="exp-tl-line" ref={lineRef} />
-          {experiences.map((e, i) => (
-            <motion.div
-              key={i}
-              className="exp-entry"
-              initial={{ opacity: 0, x: -18 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: i * 0.09 }}
-            >
-              <div className="exp-dot-col">
-                <div
-                  className={`exp-dot${i === 0 ? ' exp-dot-live' : ''}`}
-                  style={{ '--ea': e.color } as React.CSSProperties}
-                />
-              </div>
-              <div
-                className="exp-card"
-                style={{ '--ea': e.color } as React.CSSProperties}
-              >
-                <div className="exp-badge">
-                  <span className="exp-badge-icon">{ICONS[e.typeKey]}</span>
-                  {e.type}
-                </div>
-                <h3 className="exp-title">{e.role}</h3>
-                <div className="exp-co2">{e.co}</div>
-                <div className="exp-per2">{e.per}</div>
-                <div className="exp-hl">{e.highlight}</div>
-                <p className="exp-body">{e.desc}</p>
+    <section id="experience" className="dark on-ink">
+      <div className="sec">
+        <div className="kick"><Spk />Experience</div>
+        <h2 className="htitle">Work history</h2>
+        <div className="exp">
+          <svg className="exp-spine" viewBox="0 0 20 600" preserveAspectRatio="none" fill="none">
+            <path d="M10 4C4 60 16 90 10 150 4 210 16 250 10 310 4 370 16 410 10 470 4 530 14 560 10 596" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/>
+          </svg>
+          {exps.map((e, i) => (
+            <motion.div key={i} className="exp-item" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.08 }}>
+              <svg className="exp-dot" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C13 8 16 11 23 12C16 13 13 16 12 23C11 16 8 13 1 12C8 11 11 8 12 1Z"/></svg>
+              <div className="exp-per">{e.per}</div>
+              <div>
+                <div className="exp-role">{e.role}</div>
+                <div className="exp-co">{e.co}</div>
+                <p className="exp-desc">{e.desc}</p>
+                <div className="exp-hi"><Spk size={14} />{e.hi}</div>
               </div>
             </motion.div>
           ))}
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

@@ -1,67 +1,64 @@
 import { useRef, useState } from 'react';
-import { photos } from '../data/index';
-import Placeholder from './Placeholder';
-import Lightbox from './Lightbox';
+import Doodle from './Doodle';
+
+const polaroids = [
+  { w: 230, h: 280, cap: 'on the job', scene: 'camera' },
+  { w: 300, h: 230, cap: 'student mentorship', scene: 'sun' },
+  { w: 240, h: 280, cap: 'team pic', scene: 'cat' },
+  { w: 260, h: 230, cap: 'impact awards', scene: 'bloom' },
+  { w: 230, h: 280, cap: 'the crew', scene: 'heart' },
+  { w: 320, h: 230, cap: 'concert planning', scene: 'mountains' },
+  { w: 230, h: 280, cap: 'show night', scene: 'star' },
+];
+
+const Spk = () => <svg style={{ width: 16, height: 16 }} viewBox="0 0 100 100" fill="currentColor"><path d="M50 4C55 36 64 45 96 50C64 55 55 64 50 96C45 64 36 55 4 50C36 45 45 36 50 4Z"/></svg>;
 
 export default function Photos(): JSX.Element {
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const startX = useRef(0);
   const scrollLeft = useRef(0);
   const [dragging, setDragging] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const onDown = (e: React.MouseEvent | React.TouchEvent): void => {
-    isDragging.current = true;
-    setDragging(true);
-    const px = 'touches' in e ? e.touches[0].pageX : e.pageX;
-    startX.current = px - (scrollRef.current?.getBoundingClientRect().left ?? 0);
-    scrollLeft.current = scrollRef.current?.scrollLeft ?? 0;
+  const onDown = (e: React.PointerEvent) => {
+    isDragging.current = true; setDragging(true);
+    startX.current = e.clientX - (stripRef.current?.getBoundingClientRect().left ?? 0);
+    scrollLeft.current = stripRef.current?.scrollLeft ?? 0;
+    stripRef.current?.setPointerCapture(e.pointerId);
   };
-
-  const onMove = (e: React.MouseEvent | React.TouchEvent): void => {
-    if (!isDragging.current || !scrollRef.current) return;
-    e.preventDefault();
-    const px = 'touches' in e ? e.touches[0].pageX : e.pageX;
-    const walk = px - (scrollRef.current.getBoundingClientRect().left ?? 0) - startX.current;
-    scrollRef.current.scrollLeft = scrollLeft.current - walk * 1.4;
+  const onMove = (e: React.PointerEvent) => {
+    if (!isDragging.current || !stripRef.current) return;
+    const walk = e.clientX - (stripRef.current.getBoundingClientRect().left ?? 0) - startX.current;
+    stripRef.current.scrollLeft = scrollLeft.current - walk * 1.4;
   };
-
-  const onUp = (): void => { isDragging.current = false; setDragging(false); };
+  const onUp = () => { isDragging.current = false; setDragging(false); };
 
   return (
-    <div id="photos" style={{ background: 'var(--sand)' }}>
-      <div className="sec" style={{ paddingBottom: 24 }}>
-        <span className="lbl lbl-rust">Photos</span>
-        <h2 className="st">Moments</h2>
+    <section id="photos">
+      <div className="photos-head">
+        <div className="kick"><Spk />Photos</div>
+        <h2 className="htitle">Moments</h2>
       </div>
-      <div className={`dso${dragging ? ' dg' : ''}`} ref={scrollRef}
-        onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}
-        onTouchStart={onDown} onTouchMove={onMove} onTouchEnd={onUp}>
-        <div className="ds">
-          {photos.map((photo, i) => (
-            <div key={i} className="sp" style={{ width: photo.width }}
-              onClick={() => setLightboxIndex(i)} role="button" tabIndex={0}
-              aria-label={photo.alt || `Photo ${i + 1}`}
-              onKeyDown={(e) => { if (e.key === 'Enter') setLightboxIndex(i); }}>
-              {photo.src ? (
-                <img src={photo.src} alt={photo.alt || ''} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', userSelect: 'none', pointerEvents: 'none' }} draggable={false} />
-              ) : (
-                <Placeholder dark={false} label="Add photo in data/index.ts" />
-              )}
-              <div className="ph-tint" />
+      <div className={`strip${dragging ? ' dragging' : ''}`} ref={stripRef}
+        onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerLeave={onUp}>
+        <div className="strip-in">
+          {polaroids.map((p, i) => (
+            <div key={i} className="polaroid">
+              <span className="tape"/>
+              <div className="photo-placeholder" style={{ width: p.w, height: p.h }}>
+                <Doodle scene={p.scene} />
+              </div>
+              <span className="cap">{p.cap}</span>
             </div>
           ))}
         </div>
       </div>
-      <p className="drag-hint" style={{ background: 'var(--sand)' }}>Drag to explore</p>
-      {lightboxIndex !== null && (
-        <Lightbox total={photos.length} index={lightboxIndex} onClose={() => setLightboxIndex(null)}
-          onPrev={() => setLightboxIndex((p) => (p !== null ? (p - 1 + photos.length) % photos.length : 0))}
-          onNext={() => setLightboxIndex((p) => (p !== null ? (p + 1) % photos.length : 0))}
-          srcs={photos.map((p) => p.src)}
-          alts={photos.map((p) => p.alt)} />
-      )}
-    </div>
+      <div className="drag-hint">
+        <svg viewBox="0 0 40 14" fill="none">
+          <path d="M2 7h32M28 2l8 5-8 5" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+        Drag to explore
+      </div>
+    </section>
   );
 }
