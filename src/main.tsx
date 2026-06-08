@@ -11,6 +11,7 @@ const lenis = new Lenis({
   duration: 1.2,
   smoothWheel: true,
 });
+(window as any).__lenis = lenis;
 
 function raf(time: number): void {
   lenis.raf(time);

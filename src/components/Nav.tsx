@@ -17,18 +17,43 @@ export default function Nav({ active, scrolled, onDark, menuOpen, setMenuOpen }:
 
   const cls = ['nav', scrolled ? 'scrolled' : '', onDark && !scrolled ? 'on-dark' : ''].filter(Boolean).join(' ');
 
+  const scrollToSection = (id: string) => {
+    if (id === 'top') {
+      const lenis = (window as any).__lenis;
+      if (lenis?.scrollTo) { lenis.scrollTo(0); } else { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+      return;
+    }
+    const el = document.getElementById(id);
+    if (!el) return;
+    const lenis = (window as any).__lenis;
+    const offset = -68;
+    if (lenis?.scrollTo) { lenis.scrollTo(el, { offset }); }
+    else { el.scrollIntoView({ behavior: 'smooth' }); }
+  };
+
+  const handleLink = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    scrollToSection(id);
+  };
+
+  const handleMobLink = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    setMenuOpen(false);
+    setTimeout(() => scrollToSection(id), 60);
+  };
+
   return (
     <>
       <nav className={cls} id="nav">
         <div className="nav-in">
-          <a href="#top" className="logo">
+          <a href="#top" className="logo" onClick={(e) => handleLink(e, 'top')}>
             A.D.
             <span className="spk" style={{ width: 15, height: 15, display: 'inline-flex' }}><Spk /></span>
           </a>
           <div className="nav-links">
             {navLinks.map((id) => (
               id === 'photos' ? (
-                <a key={id} href={`#${id}`} className={`lnk${active === id ? ' active' : ''}`}>
+                <a key={id} href={`#${id}`} className={`lnk${active === id ? ' active' : ''}`} onClick={(e) => handleLink(e, id)}>
                   {id}
                   <svg className="nav-eyes" viewBox="0 0 60 30" fill="none">
                     <ellipse className="ink" cx="18" cy="15" rx="14" ry="13" stroke="#171310" strokeWidth="3"/>
@@ -38,7 +63,7 @@ export default function Nav({ active, scrolled, onDark, menuOpen, setMenuOpen }:
                   </svg>
                 </a>
               ) : (
-                <a key={id} href={`#${id}`} className={`lnk${active === id ? ' active' : ''}`}>{id}</a>
+                <a key={id} href={`#${id}`} className={`lnk${active === id ? ' active' : ''}`} onClick={(e) => handleLink(e, id)}>{id}</a>
               )
             ))}
             <a href={`${import.meta.env.BASE_URL}resume.pdf`} target="_blank" rel="noopener noreferrer" className="resume sketch">Résumé ↓</a>
@@ -51,7 +76,7 @@ export default function Nav({ active, scrolled, onDark, menuOpen, setMenuOpen }:
       {menuOpen && (
         <div className="mob-menu open">
           {navLinks.map((id) => (
-            <a key={id} href={`#${id}`} className="mob-link" onClick={() => setMenuOpen(false)}>{id}</a>
+            <a key={id} href={`#${id}`} className="mob-link" onClick={(e) => handleMobLink(e, id)}>{id}</a>
           ))}
           <a href={`${import.meta.env.BASE_URL}resume.pdf`} target="_blank" rel="noopener noreferrer" className="mob-resume" onClick={() => setMenuOpen(false)}>Résumé ↓</a>
         </div>
