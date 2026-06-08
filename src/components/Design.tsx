@@ -1,7 +1,23 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { designs } from '../data/index';
 
 const Spk = () => <svg style={{ width: 16, height: 16 }} viewBox="0 0 100 100" fill="currentColor"><path d="M50 4C55 36 64 45 96 50C64 55 55 64 50 96C45 64 36 55 4 50C36 45 45 36 50 4Z"/></svg>;
+
+function DesignImg({ src, alt, label }: { src: string; alt: string; label: string }) {
+  const [errored, setErrored] = useState(false);
+  if (!src || errored) {
+    return (
+      <div className="design-ph">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
+        </svg>
+        {label}
+      </div>
+    );
+  }
+  return <img src={src} alt={alt} onError={() => setErrored(true)} />;
+}
 
 export default function Design(): JSX.Element {
   return (
@@ -14,11 +30,7 @@ export default function Design(): JSX.Element {
           {designs.map((d, i) => (
             <motion.div key={i} className="design-card sketch" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: (i % 3) * 0.1 }}>
               <div className="design-img">
-                {d.src ? (
-                  <img src={d.src} alt={d.alt} />
-                ) : (
-                  <div className="design-ph">Add design</div>
-                )}
+                <DesignImg src={d.src} alt={d.alt} label={d.label} />
               </div>
               <div className="design-meta">
                 <span className="design-label">{d.label}</span>
