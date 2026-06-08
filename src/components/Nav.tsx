@@ -1,121 +1,59 @@
-import { useState } from 'react';
-import { useMagnetic } from '../hooks/useMagnetic';
-
 interface NavProps {
   active: string;
   scrolled: boolean;
   onDark: boolean;
-  theme: 'light' | 'dark';
-  onToggleTheme: () => void;
+  menuOpen: boolean;
+  setMenuOpen: (v: boolean) => void;
 }
 
-const NAV_LINKS: [string, string][] = [
-  ['about', 'About'],
-  ['experience', 'Experience'],
-  ['events', 'Events'],
-  ['photos', 'Photos'],
-  ['certifications', 'Certs'],
-  ['media', 'Media'],
-  ['blog', 'Blog'],
-  ['contact', 'Contact'],
-];
+const Spk = () => (
+  <svg width="100%" height="100%" viewBox="0 0 100 100" fill="currentColor">
+    <path d="M50 4C55 36 64 45 96 50C64 55 55 64 50 96C45 64 36 55 4 50C36 45 45 36 50 4Z"/>
+  </svg>
+);
 
-function MoonIcon(): JSX.Element {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-    </svg>
-  );
-}
+export default function Nav({ active, scrolled, onDark, menuOpen, setMenuOpen }: NavProps): JSX.Element {
+  const navLinks = ['about', 'experience', 'events', 'photos', 'design', 'writing', 'contact'];
 
-function SunIcon(): JSX.Element {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="5" />
-      <line x1="12" y1="1" x2="12" y2="3" />
-      <line x1="12" y1="21" x2="12" y2="23" />
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-      <line x1="1" y1="12" x2="3" y2="12" />
-      <line x1="21" y1="12" x2="23" y2="12" />
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-    </svg>
-  );
-}
-
-export default function Nav({ active, scrolled, onDark, theme, onToggleTheme }: NavProps): JSX.Element {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const magnetic = useMagnetic<HTMLAnchorElement>(12);
-
-  const navClass = [
-    'nav',
-    scrolled ? 'scrolled' : '',
-    onDark && !scrolled ? 'on-dark' : '',
-  ].filter(Boolean).join(' ');
-
-  const closeMenu = () => setMenuOpen(false);
+  const cls = ['nav', scrolled ? 'scrolled' : '', onDark && !scrolled ? 'on-dark' : ''].filter(Boolean).join(' ');
 
   return (
     <>
-      <nav className={navClass}>
-        <div className="nav-inner">
-          <a href="#" className="nav-name" onClick={closeMenu}>Abhinav D.</a>
+      <nav className={cls} id="nav">
+        <div className="nav-in">
+          <a href="#top" className="logo">
+            A.D.
+            <span className="spk" style={{ width: 15, height: 15, display: 'inline-flex' }}><Spk /></span>
+          </a>
           <div className="nav-links">
-            {NAV_LINKS.map(([id, lbl]) => (
-              <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}>
-                {lbl}
-              </a>
+            {navLinks.map((id) => (
+              id === 'photos' ? (
+                <a key={id} href={`#${id}`} className={`lnk${active === id ? ' active' : ''}`}>
+                  {id}
+                  <svg className="nav-eyes" viewBox="0 0 60 30" fill="none">
+                    <ellipse className="ink" cx="18" cy="15" rx="14" ry="13" stroke="#171310" strokeWidth="3"/>
+                    <ellipse className="ink" cx="42" cy="15" rx="14" ry="13" stroke="#171310" strokeWidth="3"/>
+                    <circle cx="22" cy="17" r="5" fill="#171310"/>
+                    <circle cx="46" cy="17" r="5" fill="#171310"/>
+                  </svg>
+                </a>
+              ) : (
+                <a key={id} href={`#${id}`} className={`lnk${active === id ? ' active' : ''}`}>{id}</a>
+              )
             ))}
-            <a
-              href="/resume.pdf"
-              download
-              className="nav-resume"
-              ref={magnetic.ref}
-              onMouseMove={magnetic.onMouseMove}
-              onMouseLeave={magnetic.onMouseLeave}
-            >
-              Resume ↓
-            </a>
-            <button
-              className="nav-theme-btn"
-              onClick={onToggleTheme}
-              aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-            >
-              {theme === 'light' ? <MoonIcon /> : <SunIcon />}
-            </button>
+            <a href={`${import.meta.env.BASE_URL}resume.pdf`} target="_blank" rel="noopener noreferrer" className="resume sketch">Résumé ↓</a>
           </div>
-          <button
-            className="nav-ham"
-            onClick={() => setMenuOpen((o) => !o)}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-          >
-            <span className={`ham-l top${menuOpen ? ' open' : ''}`} />
-            <span className={`ham-l mid${menuOpen ? ' open' : ''}`} />
-            <span className={`ham-l bot${menuOpen ? ' open' : ''}`} />
+          <button className="nav-ham" aria-label="Menu" onClick={() => setMenuOpen(!menuOpen)}>
+            <span className="ham-l"/><span className="ham-l"/><span className="ham-l"/>
           </button>
         </div>
       </nav>
       {menuOpen && (
-        <div className="mob-menu" role="dialog" aria-label="Navigation menu">
-          {NAV_LINKS.map(([id, lbl]) => (
-            <a
-              key={id}
-              href={`#${id}`}
-              className={`mob-link${active === id ? ' active' : ''}`}
-              onClick={closeMenu}
-            >
-              {lbl}
-            </a>
+        <div className="mob-menu open">
+          {navLinks.map((id) => (
+            <a key={id} href={`#${id}`} className="mob-link" onClick={() => setMenuOpen(false)}>{id}</a>
           ))}
-          <a href="/resume.pdf" download className="mob-resume" onClick={closeMenu}>
-            Resume ↓
-          </a>
-          <button className="mob-theme" onClick={() => { onToggleTheme(); closeMenu(); }}>
-            {theme === 'light' ? <MoonIcon /> : <SunIcon />}
-            <span>{theme === 'light' ? 'Dark mode' : 'Light mode'}</span>
-          </button>
+          <a href={`${import.meta.env.BASE_URL}resume.pdf`} target="_blank" rel="noopener noreferrer" className="mob-resume" onClick={() => setMenuOpen(false)}>Résumé ↓</a>
         </div>
       )}
     </>
