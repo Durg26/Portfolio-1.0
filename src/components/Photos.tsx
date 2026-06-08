@@ -1,13 +1,14 @@
 import { useRef, useState } from 'react';
+import Doodle from './Doodle';
 
 const polaroids = [
-  { w: 230, h: 280, cap: 'on the job' },
-  { w: 300, h: 230, cap: 'student mentorship' },
-  { w: 240, h: 280, cap: 'team pic' },
-  { w: 260, h: 230, cap: 'impact awards' },
-  { w: 230, h: 280, cap: 'the crew' },
-  { w: 320, h: 230, cap: 'concert planning' },
-  { w: 230, h: 280, cap: 'show night' },
+  { w: 230, h: 280, cap: 'on the job', scene: 'camera' },
+  { w: 300, h: 230, cap: 'student mentorship', scene: 'sun' },
+  { w: 240, h: 280, cap: 'team pic', scene: 'cat' },
+  { w: 260, h: 230, cap: 'impact awards', scene: 'bloom' },
+  { w: 230, h: 280, cap: 'the crew', scene: 'heart' },
+  { w: 320, h: 230, cap: 'concert planning', scene: 'mountains' },
+  { w: 230, h: 280, cap: 'show night', scene: 'star' },
 ];
 
 const Spk = () => <svg style={{ width: 16, height: 16 }} viewBox="0 0 100 100" fill="currentColor"><path d="M50 4C55 36 64 45 96 50C64 55 55 64 50 96C45 64 36 55 4 50C36 45 45 36 50 4Z"/></svg>;
@@ -45,7 +46,7 @@ export default function Photos(): JSX.Element {
             <div key={i} className="polaroid">
               <span className="tape"/>
               <div className="photo-placeholder" style={{ width: p.w, height: p.h }}>
-                Add photo
+                <Doodle scene={p.scene} />
               </div>
               <span className="cap">{p.cap}</span>
             </div>
