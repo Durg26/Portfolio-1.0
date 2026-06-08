@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import Toast from './Toast';
 
 const CONTACT_EMAIL = 'd.abhinav12@gmail.com';
 
@@ -12,6 +13,15 @@ export default function Contact(): JSX.Element {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [focused, setFocused] = useState<Record<string, boolean>>({});
   const [sent, setSent] = useState(false);
+  const [toastVisible, setToastVisible] = useState(false);
+  const hideToast = useCallback(() => setToastVisible(false), []);
+
+  const copyEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(CONTACT_EMAIL).then(() => setToastVisible(true)).catch(() => {
+      window.location.href = `mailto:${CONTACT_EMAIL}`;
+    });
+  };
 
   const validate = (f: string, v: string) => {
     if (!v.trim()) return 'Required';
@@ -80,7 +90,7 @@ export default function Contact(): JSX.Element {
             </svg>
             <div className="ct-info">
               {[
-                { label: 'Email', value: 'd.abhinav12@gmail.com', href: 'mailto:d.abhinav12@gmail.com' },
+                { label: 'Email', value: 'd.abhinav12@gmail.com', href: 'mailto:d.abhinav12@gmail.com', copy: true },
                 { label: 'Location', value: 'Halifax, Nova Scotia', href: null },
                 { label: 'LinkedIn', value: 'in/abhinav-durgavarjhula', href: 'https://www.linkedin.com/in/abhinav-durgavarjhula/' },
                 { label: 'Instagram', value: '@the.diarybylens', href: 'https://instagram.com/the.diarybylens' },
@@ -89,7 +99,17 @@ export default function Contact(): JSX.Element {
                   <div>
                     <div className="ci-l">{ci.label}</div>
                     <div className="ci-v">
-                      {ci.href ? <a href={ci.href} target={ci.href.startsWith('mailto') ? undefined : '_blank'} rel="noopener noreferrer">{ci.value}</a> : ci.value}
+                      {ci.href ? (
+                        <a
+                          href={ci.href}
+                          target={ci.href.startsWith('mailto') ? undefined : '_blank'}
+                          rel="noopener noreferrer"
+                          onClick={ci.copy ? copyEmail : undefined}
+                          title={ci.copy ? 'Click to copy' : undefined}
+                        >
+                          {ci.value}
+                        </a>
+                      ) : ci.value}
                     </div>
                   </div>
                 </div>
@@ -98,6 +118,7 @@ export default function Contact(): JSX.Element {
           </motion.div>
         </div>
       </div>
+      <Toast message="Email copied ✶" visible={toastVisible} onHide={hideToast} />
     </section>
   );
 }

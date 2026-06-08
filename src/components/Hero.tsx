@@ -76,6 +76,12 @@ export default function Hero(): JSX.Element {
         </svg>
         <p>Building communities, crafting events, and making things that <span className="hl">genuinely connect</span> with people.</p>
       </div>
+      <div className="avail-wrap">
+        <div className="avail sketch">
+          <span className="avail-dot"/>
+          Open to opportunities
+        </div>
+      </div>
     </header>
   );
 }

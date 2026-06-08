@@ -1,6 +1,4 @@
-// Hand-drawn doodle placeholders — used as the empty state for image slots
-// (events, photos, photography, design, blog) until real images are added.
-// Scene paths come straight from the design handoff prototype.
+import { motion } from 'framer-motion';
 
 const DOODLES: Record<string, string> = {
   poster: "<rect x='128' y='52' width='144' height='196' rx='8'/><circle cx='200' cy='112' r='32'/><path d='M150 170h100M150 192h100M150 214h64'/>",
@@ -33,12 +31,16 @@ export default function Doodle({ scene, dark = false }: DoodleProps): JSX.Elemen
   const bg = dark ? '#221d16' : '#f6f2ea';
   const stroke = dark ? '#efe9db' : '#171310';
   return (
-    <svg
+    <motion.svg
       className="doodle"
       viewBox="0 0 400 300"
       preserveAspectRatio="xMidYMid slice"
       style={{ width: '100%', height: '100%', display: 'block' }}
       aria-hidden="true"
+      initial={{ opacity: 0, scale: 0.94 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: '-8%' }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
     >
       <rect width="400" height="300" fill={bg} />
       <g
@@ -51,6 +53,6 @@ export default function Doodle({ scene, dark = false }: DoodleProps): JSX.Elemen
         style={{ color: stroke }}
         dangerouslySetInnerHTML={{ __html: inner }}
       />
-    </svg>
+    </motion.svg>
   );
 }
