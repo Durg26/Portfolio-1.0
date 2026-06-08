@@ -1,12 +1,14 @@
 import { useRef, useState } from 'react';
 import Doodle from './Doodle';
 
-const polaroids = [
-  { w: 230, h: 280, cap: 'on the job', scene: 'camera' },
-  { w: 300, h: 230, cap: 'student mentorship', scene: 'sun' },
-  { w: 240, h: 280, cap: 'team pic', scene: 'cat' },
-  { w: 260, h: 230, cap: 'impact awards', scene: 'bloom' },
-  { w: 230, h: 280, cap: 'the crew', scene: 'heart' },
+const BASE = import.meta.env.BASE_URL;
+
+const polaroids: { w: number; h: number; cap: string; scene: string; src?: string }[] = [
+  { w: 230, h: 280, cap: 'on the job', scene: 'camera', src: `${BASE}photos/photo-1.jpg` },
+  { w: 300, h: 230, cap: 'student mentorship', scene: 'sun', src: `${BASE}photos/photo-2.jpg` },
+  { w: 240, h: 280, cap: 'team pic', scene: 'cat', src: `${BASE}photos/photo-3.jpg` },
+  { w: 260, h: 230, cap: 'impact awards', scene: 'bloom', src: `${BASE}photos/photo-4.jpg` },
+  { w: 230, h: 280, cap: 'the crew', scene: 'heart', src: `${BASE}photos/photo-5.jpg` },
   { w: 320, h: 230, cap: 'concert planning', scene: 'mountains' },
   { w: 230, h: 280, cap: 'show night', scene: 'star' },
 ];
@@ -46,7 +48,11 @@ export default function Photos(): JSX.Element {
             <div key={i} className="polaroid">
               <span className="tape"/>
               <div className="photo-placeholder" style={{ width: p.w, height: p.h }}>
-                <Doodle scene={p.scene} />
+                {p.src ? (
+                  <img src={p.src} alt={p.cap} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                ) : (
+                  <Doodle scene={p.scene} />
+                )}
               </div>
               <span className="cap">{p.cap}</span>
             </div>
