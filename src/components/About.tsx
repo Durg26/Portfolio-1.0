@@ -5,7 +5,7 @@ const Spk = () => <svg style={{ width: 16, height: 16 }} viewBox="0 0 100 100" f
 const chips = ['Social Media Strategy','Event Management','Content Creation','Marketing & PR','Community Engagement','Canva & Figma','Adobe Suite','HubSpot','Data Analysis','Research','Branding','Psychology'];
 
 const facts = [
-  { l: 'Education', v: 'BA Psychology, Minor in Management — Dalhousie University (Apr 2026)' },
+  { l: 'Education', v: 'BSc Psychology, Minor in Management — Dalhousie University (Apr 2026)' },
   { l: 'Also', v: 'Study Abroad, National University of Singapore (2024–2025)' },
   { l: 'Based in', v: 'Halifax, Nova Scotia' },
   { l: 'Focus', v: 'Marketing · Events · Community Engagement' },
@@ -21,7 +21,7 @@ export default function About(): JSX.Element {
         <div className="about-grid">
           <motion.div initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65 }}>
             <h2 className="about-lead">Curious about <span className="hl">people.</span><br/>Serious about craft.</h2>
-            <p className="about-body">BA Psychology student at Dalhousie, graduating April 2026. Minoring in Management with a Certificate in Innovation and Entrepreneurship, and I spent a year studying at the National University of Singapore — which changed how I think about people, culture, and what makes ideas actually travel.</p>
+            <p className="about-body">BSc Psychology student at Dalhousie, graduating April 2026. Minoring in Management with a Certificate in Innovation and Entrepreneurship, and I spent a year studying at the National University of Singapore — which changed how I think about people, culture, and what makes ideas actually travel.</p>
             <p className="about-body">My work sits at the corner of marketing, community, and curiosity — running campaigns for 19,000+ students, growing a brand's Instagram to 1K+ with no paid budget, or building a platform from nothing. What ties it together is a background in psychology and a habit of asking why before how.</p>
             <div className="chips">
               {chips.map((c, i) => <span key={i} className="chip sketch">{c}</span>)}
