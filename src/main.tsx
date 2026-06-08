@@ -11,6 +11,7 @@ const lenis = new Lenis({
   duration: 1.2,
   smoothWheel: true,
 });
+(window as any).__lenis = lenis;
 
 function raf(time: number): void {
   lenis.raf(time);
@@ -18,13 +19,16 @@ function raf(time: number): void {
 }
 requestAnimationFrame(raf);
 
-// Register service worker
+// Unregister any previously-installed service worker and clear its caches.
+// A stale SW shell was trapping old asset hashes and breaking the page after
+// each deploy; the site is small enough that it doesn't need offline caching.
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => {
-      // SW registration failure is non-fatal
-    });
+  navigator.serviceWorker.getRegistrations().then((regs) => {
+    regs.forEach((reg) => reg.unregister());
   });
+  if (window.caches) {
+    caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
+  }
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

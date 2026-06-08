@@ -1,14 +1,18 @@
 import { useRef, useState } from 'react';
 import Doodle from './Doodle';
 
-const polaroids = [
-  { w: 230, h: 280, cap: 'on the job', scene: 'camera' },
-  { w: 300, h: 230, cap: 'student mentorship', scene: 'sun' },
-  { w: 240, h: 280, cap: 'team pic', scene: 'cat' },
-  { w: 260, h: 230, cap: 'impact awards', scene: 'bloom' },
-  { w: 230, h: 280, cap: 'the crew', scene: 'heart' },
-  { w: 320, h: 230, cap: 'concert planning', scene: 'mountains' },
-  { w: 230, h: 280, cap: 'show night', scene: 'star' },
+const BASE = import.meta.env.BASE_URL;
+
+const polaroids: { w: number; h: number; cap: string; scene: string; src?: string }[] = [
+  { w: 230, h: 280, cap: 'orientation week', scene: 'camera', src: `${BASE}photos/moment-1.jpg` },
+  { w: 300, h: 230, cap: 'welcome crew',     scene: 'sun',    src: `${BASE}photos/moment-2.jpg` },
+  { w: 240, h: 280, cap: 'campus life',      scene: 'cat',    src: `${BASE}photos/moment-3.jpg` },
+  { w: 260, h: 230, cap: 'event night',      scene: 'bloom',  src: `${BASE}photos/moment-4.jpg` },
+  { w: 230, h: 280, cap: 'late nights',      scene: 'heart',  src: `${BASE}photos/moment-5.jpg` },
+  { w: 320, h: 230, cap: 'the team',         scene: 'mountains', src: `${BASE}photos/moment-6.jpg` },
+  { w: 230, h: 280, cap: 'spring sprint',    scene: 'star',   src: `${BASE}photos/moment-7.jpg` },
+  { w: 260, h: 230, cap: 'good company',     scene: 'bulb',   src: `${BASE}photos/moment-8.jpg` },
+  { w: 300, h: 280, cap: 'fresh start',      scene: 'party',  src: `${BASE}photos/moment-9.jpg` },
 ];
 
 const Spk = () => <svg style={{ width: 16, height: 16 }} viewBox="0 0 100 100" fill="currentColor"><path d="M50 4C55 36 64 45 96 50C64 55 55 64 50 96C45 64 36 55 4 50C36 45 45 36 50 4Z"/></svg>;
@@ -46,7 +50,11 @@ export default function Photos(): JSX.Element {
             <div key={i} className="polaroid">
               <span className="tape"/>
               <div className="photo-placeholder" style={{ width: p.w, height: p.h }}>
-                <Doodle scene={p.scene} />
+                {p.src ? (
+                  <img src={p.src} alt={p.cap} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                ) : (
+                  <Doodle scene={p.scene} />
+                )}
               </div>
               <span className="cap">{p.cap}</span>
             </div>
