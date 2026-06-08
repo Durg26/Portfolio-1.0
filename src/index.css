@@ -71,7 +71,7 @@ section[id]{scroll-margin-top:84px}
 .tags{display:flex;justify-content:space-between;gap:24px;margin:34px 2px 38px}
 .tag{font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;line-height:1.5;color:var(--ink)}
 .tag.c{text-align:center}.tag.r{text-align:right}
-.wordmark{text-align:center;line-height:.82}
+.wordmark{text-align:center;line-height:.82;padding:10px}
 .wordmark span{font-family:var(--display);display:block;letter-spacing:.01em}
 .wordmark .l1{font-size:clamp(66px,16.5vw,232px);letter-spacing:10px}
 .wordmark .l2{font-size:clamp(31px,7.85vw,110px);letter-spacing:5px}
