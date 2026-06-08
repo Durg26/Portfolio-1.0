@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import Nav from './components/Nav';
 import Hero from './components/Hero';
 import Marquee from './components/Marquee';
@@ -78,12 +79,27 @@ function PortfolioHome(): JSX.Element {
   );
 }
 
+const PageFade = ({ children }: { children: React.ReactNode }) => (
+  <motion.div
+    className="page-fade"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.22 }}
+  >
+    {children}
+  </motion.div>
+);
+
 export default function App(): JSX.Element {
+  const location = useLocation();
   return (
-    <Routes>
-      <Route path="/" element={<PortfolioHome />} />
-      <Route path="/blog/:slug" element={<BlogPost />} />
-      <Route path="/event/:slug" element={<EventPost />} />
-    </Routes>
+    <AnimatePresence mode="wait" initial={false}>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageFade><PortfolioHome /></PageFade>} />
+        <Route path="/blog/:slug" element={<PageFade><BlogPost /></PageFade>} />
+        <Route path="/event/:slug" element={<PageFade><EventPost /></PageFade>} />
+      </Routes>
+    </AnimatePresence>
   );
 }
