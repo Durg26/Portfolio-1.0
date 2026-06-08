@@ -1,166 +1,103 @@
 import { useState } from 'react';
-import { useMagnetic } from '../hooks/useMagnetic';
-
-interface FormState {
-  name: string;
-  email: string;
-  message: string;
-}
-
-interface FormErrors {
-  name?: string;
-  email?: string;
-  message?: string;
-}
+import { motion } from 'framer-motion';
 
 const CONTACT_EMAIL = 'd.abhinav12@gmail.com';
 
-const CONTACT_INFO: [string, string, string | null][] = [
-  ['Email', 'd.abhinav12@gmail.com', 'mailto:d.abhinav12@gmail.com'],
-  ['Location', 'Halifax, Nova Scotia', null],
-  ['LinkedIn', 'linkedin.com/in/abhinav-durgavarjhula', 'https://www.linkedin.com/in/abhinav-durgavarjhula/'],
-  ['Photography', '@the.diarybylens', 'https://instagram.com/the.diarybylens'],
-  ['The Abstract Cafe', '@the.abstract.cafe', 'https://instagram.com/the.abstract.cafe'],
-  ['Latispanica', '@latispanica', 'https://instagram.com/latispanica'],
-];
+const Spk = () => <svg style={{ width: 16, height: 16 }} viewBox="0 0 100 100" fill="currentColor"><path d="M50 4C55 36 64 45 96 50C64 55 55 64 50 96C45 64 36 55 4 50C36 45 45 36 50 4Z"/></svg>;
 
-function validateEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+function validateEmail(v: string) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
 export default function Contact(): JSX.Element {
-  const magnetic = useMagnetic<HTMLButtonElement>(12);
-
-  const [form, setForm] = useState<FormState>({ name: '', email: '', message: '' });
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [touched, setTouched] = useState<Partial<Record<keyof FormState, boolean>>>({});
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [focused, setFocused] = useState<Record<string, boolean>>({});
   const [sent, setSent] = useState(false);
 
-  const validate = (field: keyof FormState, value: string): string => {
-    if (!value.trim()) return 'This field is required';
-    if (field === 'email' && !validateEmail(value)) return 'Please enter a valid email';
+  const validate = (f: string, v: string) => {
+    if (!v.trim()) return 'Required';
+    if (f === 'email' && !validateEmail(v)) return 'Enter a valid email';
     return '';
   };
 
-  const onBlur = (field: keyof FormState): void => {
-    setTouched((prev) => ({ ...prev, [field]: true }));
-    const err = validate(field, form[field]);
-    setErrors((prev) => ({ ...prev, [field]: err }));
+  const onChange = (f: string, v: string) => {
+    setForm(p => ({ ...p, [f]: v }));
+    if (errors[f]) setErrors(p => ({ ...p, [f]: validate(f, v) }));
   };
 
-  const onChange = (field: keyof FormState, value: string): void => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-    if (touched[field]) {
-      const err = validate(field, value);
-      setErrors((prev) => ({ ...prev, [field]: err }));
-    }
-  };
-
-  const onSubmit = (e: React.FormEvent): void => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newErrors: FormErrors = {};
-    (Object.keys(form) as (keyof FormState)[]).forEach((f) => {
-      const err = validate(f, form[f]);
-      if (err) newErrors[f] = err;
-    });
-    setTouched({ name: true, email: true, message: true });
+    const newErrors: Record<string, string> = {};
+    Object.entries(form).forEach(([k, v]) => { const err = validate(k, v); if (err) newErrors[k] = err; });
     setErrors(newErrors);
     if (Object.values(newErrors).some(Boolean)) return;
 
     const subject = encodeURIComponent(`Portfolio enquiry from ${form.name}`);
-    const body = encodeURIComponent(
-      `Hi Abhinav,\n\n${form.message}\n\n— ${form.name}\n${form.email}`
-    );
+    const body = encodeURIComponent(`Hi Abhinav,\n\n${form.message}\n\n— ${form.name}\n${form.email}`);
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
     setSent(true);
   };
 
   return (
-    <div className="full-bg" id="contact" style={{ background: 'var(--dark)' }} data-bg="dark">
-      <section className="sec">
-        <span className="lbl lbl-dim">Contact</span>
-        <h2 className="st lh">Get in Touch</h2>
+    <section id="contact">
+      <div className="sec">
+        <div className="kick"><Spk />Contact</div>
+        <h2 className="htitle">Let's make<br/>something <span className="hl">good.</span></h2>
         <div className="ct-grid">
-          <form className="ct-form" onSubmit={onSubmit} noValidate>
-            <div className="ff">
-              <label className="fl" htmlFor="ct-name">Name</label>
-              <input
-                id="ct-name"
-                className={`fi${errors.name && touched.name ? ' error' : ''}`}
-                type="text"
-                placeholder="Your name"
-                value={form.name}
-                onChange={(e) => onChange('name', e.target.value)}
-                onBlur={() => onBlur('name')}
-              />
-              {touched.name && errors.name && (
-                <span className="field-err">{errors.name}</span>
-              )}
-            </div>
-            <div className="ff">
-              <label className="fl" htmlFor="ct-email">Email</label>
-              <input
-                id="ct-email"
-                className={`fi${errors.email && touched.email ? ' error' : ''}`}
-                type="email"
-                placeholder="your@email.com"
-                value={form.email}
-                onChange={(e) => onChange('email', e.target.value)}
-                onBlur={() => onBlur('email')}
-              />
-              {touched.email && errors.email && (
-                <span className="field-err">{errors.email}</span>
-              )}
-            </div>
-            <div className="ff">
-              <label className="fl" htmlFor="ct-message">Message</label>
-              <textarea
-                id="ct-message"
-                className={`fi${errors.message && touched.message ? ' error' : ''}`}
-                rows={4}
-                placeholder="Say hello..."
-                value={form.message}
-                onChange={(e) => onChange('message', e.target.value)}
-                onBlur={() => onBlur('message')}
-              />
-              {touched.message && errors.message && (
-                <span className="field-err">{errors.message}</span>
-              )}
-            </div>
+          <motion.form className="ct-form" onSubmit={onSubmit} noValidate initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65 }}>
             {sent ? (
-              <p style={{ fontSize: 15, color: 'var(--rust)' }}>
-                Opening your email app — see you there.
-              </p>
+              <p className="sent">Opening your email app — see you there. ✶</p>
             ) : (
-              <button
-                type="submit"
-                className="fs-btn"
-                ref={magnetic.ref}
-                onMouseMove={magnetic.onMouseMove}
-                onMouseLeave={magnetic.onMouseLeave}
-              >
-                Send Message
-              </button>
-            )}
-          </form>
-          <div className="ct-info">
-            {CONTACT_INFO.map(([l, v, h], i) => (
-              <div key={i} className="ci">
-                <div className="ci-l">{l}</div>
-                <div className="ci-v">
-                  {h ? (
-                    <a href={h} target="_blank" rel="noopener noreferrer">
-                      {v}
-                    </a>
-                  ) : (
-                    v
-                  )}
+              <>
+                {(['name', 'email'] as const).map(f => (
+                  <div key={f} className="ff">
+                    <label className="fl">{f.charAt(0).toUpperCase() + f.slice(1)}</label>
+                    <div className={`fwrap${focused[f] ? ' focused' : ''}`}>
+                      <input className="fi" type={f === 'email' ? 'email' : 'text'} placeholder={f === 'email' ? 'your@email.com' : 'Your name'}
+                        value={form[f]} onChange={e => onChange(f, e.target.value)}
+                        onFocus={() => setFocused(p => ({ ...p, [f]: true }))}
+                        onBlur={() => { setFocused(p => ({ ...p, [f]: false })); setErrors(p => ({ ...p, [f]: validate(f, form[f]) })); }} />
+                    </div>
+                    {errors[f] && <span style={{ fontSize: 12, color: 'var(--accent)' }}>{errors[f]}</span>}
+                  </div>
+                ))}
+                <div className="ff">
+                  <label className="fl">Message</label>
+                  <div className={`fwrap${focused.message ? ' focused' : ''}`}>
+                    <textarea className="fi" placeholder="Say hello..." rows={4}
+                      value={form.message} onChange={e => onChange('message', e.target.value)}
+                      onFocus={() => setFocused(p => ({ ...p, message: true }))}
+                      onBlur={() => { setFocused(p => ({ ...p, message: false })); setErrors(p => ({ ...p, message: validate('message', form.message) })); }} />
+                  </div>
+                  {errors.message && <span style={{ fontSize: 12, color: 'var(--accent)' }}>{errors.message}</span>}
                 </div>
-              </div>
-            ))}
-          </div>
+                <button type="submit" className="send sketch">Send it →</button>
+              </>
+            )}
+          </motion.form>
+          <motion.div className="ct-right" initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65, delay: 0.15 }}>
+            <svg className="ct-arrow" viewBox="0 0 80 80" fill="none">
+              <path d="M68 8C40 10 18 26 16 58M16 58l-6-18M16 58l20-8" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <div className="ct-info">
+              {[
+                { label: 'Email', value: 'd.abhinav12@gmail.com', href: 'mailto:d.abhinav12@gmail.com' },
+                { label: 'Location', value: 'Halifax, Nova Scotia', href: null },
+                { label: 'LinkedIn', value: 'in/abhinav-durgavarjhula', href: 'https://www.linkedin.com/in/abhinav-durgavarjhula/' },
+                { label: 'Instagram', value: '@the.diarybylens', href: 'https://instagram.com/the.diarybylens' },
+              ].map((ci, i) => (
+                <div key={i} className="ci">
+                  <div>
+                    <div className="ci-l">{ci.label}</div>
+                    <div className="ci-v">
+                      {ci.href ? <a href={ci.href} target={ci.href.startsWith('mailto') ? undefined : '_blank'} rel="noopener noreferrer">{ci.value}</a> : ci.value}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

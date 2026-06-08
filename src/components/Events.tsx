@@ -1,92 +1,41 @@
-import { useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { eventsData } from '../data/index';
-import Placeholder from './Placeholder';
 
-interface EventCardProps {
-  name: string;
-  date: string;
-  desc: string;
-  slug: string;
-  index: number;
-}
+const Spk = () => <svg style={{ width: 16, height: 16 }} viewBox="0 0 100 100" fill="currentColor"><path d="M50 4C55 36 64 45 96 50C64 55 55 64 50 96C45 64 36 55 4 50C36 45 45 36 50 4Z"/></svg>;
 
-function EventCard({ name, date, desc, slug, index }: EventCardProps): JSX.Element {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const el = cardRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const rx = ((e.clientY - cy) / (rect.height / 2)) * -8;
-    const ry = ((e.clientX - cx) / (rect.width / 2)) * 8;
-    el.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-5px)`;
-    el.style.boxShadow = '0 24px 52px rgba(28,25,23,.09)';
-    const highlight = el.querySelector<HTMLDivElement>('.tilt-highlight');
-    if (highlight) {
-      const xPct = ((e.clientX - rect.left) / rect.width) * 100;
-      const yPct = ((e.clientY - rect.top) / rect.height) * 100;
-      highlight.style.background = `radial-gradient(circle at ${xPct}% ${yPct}%, rgba(255,255,255,0.12) 0%, transparent 60%)`;
-      highlight.style.opacity = '1';
-    }
-  }, []);
-
-  const onMouseLeave = useCallback(() => {
-    const el = cardRef.current;
-    if (!el) return;
-    el.style.transform = '';
-    el.style.boxShadow = '';
-    const highlight = el.querySelector<HTMLDivElement>('.tilt-highlight');
-    if (highlight) highlight.style.opacity = '0';
-  }, []);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 22 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.65, delay: index * 0.08 }}
-    >
-      <Link to={`/event/${slug}`} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
-        <div
-          className="ev-card"
-          ref={cardRef}
-          onMouseMove={onMouseMove}
-          onMouseLeave={onMouseLeave}
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          <div className="tilt-highlight" />
-          <div className="ev-img">
-            <Placeholder dark={false} label="Drop photo here" />
-          </div>
-          <div className="ev-body">
-            <div className="ev-num">
-              {String(index + 1).padStart(2, '0')} / {date}
-            </div>
-            <div className="ev-name">{name}</div>
-            <p className="ev-desc">{desc}</p>
-          </div>
-        </div>
-      </Link>
-    </motion.div>
-  );
-}
+const events = [
+  { meta: '01 · August 2025', name: 'Dalhousie Orientation Week', desc: "Full ownership of promotional strategy, logistics, and on-site execution for Dalhousie's flagship Orientation Week, reaching thousands of incoming students.", slug: 'dalhousie-orientation-week' },
+  { meta: '02 · 2025', name: 'Impact Awards', desc: 'Planned and delivered the Impact Awards ceremony for Dalhousie Student Affairs, managing end-to-end production, communication, and on-the-day operations.', slug: 'impact-awards-2025' },
+  { meta: '03 · 2023 – 2024', name: 'Science Society Events', desc: 'Led marketing and PR for 4+ Science Society events per semester, driving student engagement through social media strategy, campus partnerships, and cohesive visual branding.', slug: 'science-society-events' },
+  { meta: '04 · October 2024', name: 'Event Tree Platform Launch', desc: 'Founded and launched Event Tree, a campus event discovery platform for Dalhousie students. Handled concept, UX design, promotion strategy, and rollout from the ground up.', slug: 'event-tree-launch' },
+];
 
 export default function Events(): JSX.Element {
   return (
-    <div className="full-bg" id="events" style={{ background: 'var(--cream)' }}>
-      <section className="sec">
-        <span className="lbl lbl-rust">Events</span>
-        <h2 className="st">Events I&apos;ve Managed</h2>
-        <div className="ev-grid">
-          {eventsData.map((e, i) => (
-            <EventCard key={i} name={e.name} date={e.date} desc={e.desc} slug={e.slug} index={i} />
+    <section id="events">
+      <div className="sec">
+        <div className="kick"><Spk />Events</div>
+        <h2 className="htitle">Events I've managed</h2>
+        <p className="lead-note">A curation of events I managed or was a part of.</p>
+        <div className="cards2">
+          {events.map((ev, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.1 }}>
+              <Link to={`/event/${ev.slug}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+                <div className="ev sketch">
+                  <div className="pic" style={{ background: 'var(--paper2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, color: 'var(--ink-soft)' }}>
+                    Event photo
+                  </div>
+                  <div className="ev-body">
+                    <div className="ev-meta">{ev.meta}</div>
+                    <div className="ev-name">{ev.name}</div>
+                    <p className="ev-desc">{ev.desc}</p>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }
