@@ -4,13 +4,15 @@ import Doodle from './Doodle';
 const BASE = import.meta.env.BASE_URL;
 
 const polaroids: { w: number; h: number; cap: string; scene: string; src?: string }[] = [
-  { w: 230, h: 280, cap: 'on the job', scene: 'camera', src: `${BASE}photos/photo-1.jpg` },
-  { w: 300, h: 230, cap: 'student mentorship', scene: 'sun', src: `${BASE}photos/photo-2.jpg` },
-  { w: 240, h: 280, cap: 'team pic', scene: 'cat', src: `${BASE}photos/photo-3.jpg` },
-  { w: 260, h: 230, cap: 'impact awards', scene: 'bloom', src: `${BASE}photos/photo-4.jpg` },
-  { w: 230, h: 280, cap: 'the crew', scene: 'heart', src: `${BASE}photos/photo-5.jpg` },
-  { w: 320, h: 230, cap: 'concert planning', scene: 'mountains' },
-  { w: 230, h: 280, cap: 'show night', scene: 'star' },
+  { w: 230, h: 280, cap: 'orientation week', scene: 'camera', src: `${BASE}photos/moment-1.jpg` },
+  { w: 300, h: 230, cap: 'welcome crew',     scene: 'sun',    src: `${BASE}photos/moment-2.jpg` },
+  { w: 240, h: 280, cap: 'campus life',      scene: 'cat',    src: `${BASE}photos/moment-3.jpg` },
+  { w: 260, h: 230, cap: 'event night',      scene: 'bloom',  src: `${BASE}photos/moment-4.jpg` },
+  { w: 230, h: 280, cap: 'late nights',      scene: 'heart',  src: `${BASE}photos/moment-5.jpg` },
+  { w: 320, h: 230, cap: 'the team',         scene: 'mountains', src: `${BASE}photos/moment-6.jpg` },
+  { w: 230, h: 280, cap: 'spring sprint',    scene: 'star',   src: `${BASE}photos/moment-7.jpg` },
+  { w: 260, h: 230, cap: 'good company',     scene: 'bulb',   src: `${BASE}photos/moment-8.jpg` },
+  { w: 300, h: 280, cap: 'fresh start',      scene: 'party',  src: `${BASE}photos/moment-9.jpg` },
 ];
 
 const Spk = () => <svg style={{ width: 16, height: 16 }} viewBox="0 0 100 100" fill="currentColor"><path d="M50 4C55 36 64 45 96 50C64 55 55 64 50 96C45 64 36 55 4 50C36 45 45 36 50 4Z"/></svg>;

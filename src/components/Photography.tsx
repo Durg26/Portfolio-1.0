@@ -11,7 +11,7 @@ const MEDIA = [
   { big: false, src: `${base}photos/photo-2.jpg`, scene: 'camera' },
   { big: false, src: `${base}photos/photo-3.jpg`, scene: 'bloom' },
   { big: true,  src: `${base}photos/photo-4.jpg`, scene: 'sun' },
-  { big: false, src: '', scene: 'heart' },
+  { big: false, src: `${base}photos/photo-5.jpg`, scene: 'heart' },
 ];
 
 function PhotoImg({ src, scene }: { src: string; scene: string }) {
