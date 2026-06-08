@@ -248,9 +248,9 @@ export interface DesignItem {
 const base = import.meta.env.BASE_URL;
 
 export const designs: DesignItem[] = [
-  { src: `${base}designs/abstract-cafe-march-menu.jpg`, alt: 'Abstract Cafe March Menu', label: 'March Menu', client: 'The Abstract Cafe' },
-  { src: `${base}designs/abstract-cafe-valentines-menu.jpg`, alt: 'Abstract Cafe Valentines Menu', label: 'Valentine\'s Menu', client: 'The Abstract Cafe' },
-  { src: `${base}designs/abstract-cafe-menu-update.jpg`, alt: 'Abstract Cafe Menu Update', label: 'Menu Update', client: 'The Abstract Cafe' },
-  { src: `${base}designs/abstract-cafe-garrison.jpg`, alt: 'Garrison Happy Hour poster', label: 'Garrison Happy Hour', client: 'The Abstract Cafe' },
-  { src: `${base}designs/latispanica-mundialito.jpg`, alt: 'Latispanica Mundialito Co-Ed soccer tournament poster', label: 'Mundialito Co-Ed', client: 'Latispanica' },
+  { src: `${base}designs/abstract-cafe-march-menu.png`, alt: 'Abstract Cafe March Menu', label: 'March Menu', client: 'The Abstract Cafe' },
+  { src: `${base}designs/abstract-cafe-valentines-menu.png`, alt: 'Abstract Cafe Valentines Menu', label: 'Valentine\'s Menu', client: 'The Abstract Cafe' },
+  { src: `${base}designs/abstract-cafe-menu-update.png`, alt: 'Abstract Cafe Menu Update', label: 'Menu Update', client: 'The Abstract Cafe' },
+  { src: `${base}designs/abstract-cafe-garrison.png`, alt: 'Garrison Happy Hour poster', label: 'Garrison Happy Hour', client: 'The Abstract Cafe' },
+  { src: `${base}designs/latispanica-mundialito.png`, alt: 'Latispanica Mundialito Co-Ed soccer tournament poster', label: 'Mundialito Co-Ed', client: 'Latispanica' },
 ];
