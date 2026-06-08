@@ -251,6 +251,6 @@ export const designs: DesignItem[] = [
   { src: `${base}designs/abstract-cafe-march-menu.jpg`, alt: 'Abstract Cafe March Menu', label: 'March Menu', client: 'The Abstract Cafe' },
   { src: `${base}designs/abstract-cafe-valentines-menu.jpg`, alt: 'Abstract Cafe Valentines Menu', label: 'Valentine\'s Menu', client: 'The Abstract Cafe' },
   { src: `${base}designs/abstract-cafe-menu-update.jpg`, alt: 'Abstract Cafe Menu Update', label: 'Menu Update', client: 'The Abstract Cafe' },
-  { src: `${base}designs/abstract-cafe-brewing-soon.jpg`, alt: 'Brewing Soon poster', label: 'Brewing Soon', client: 'The Abstract Cafe' },
   { src: `${base}designs/abstract-cafe-garrison.jpg`, alt: 'Garrison Happy Hour poster', label: 'Garrison Happy Hour', client: 'The Abstract Cafe' },
+  { src: `${base}designs/latispanica-mundialito.jpg`, alt: 'Latispanica Mundialito Co-Ed soccer tournament poster', label: 'Mundialito Co-Ed', client: 'Latispanica' },
 ];
