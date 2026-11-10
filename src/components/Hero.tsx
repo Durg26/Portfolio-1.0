@@ -62,7 +62,7 @@ export default function Hero(): JSX.Element {
       <div className="tags">
         <div className="tag">BA Psychology,<br/>Dalhousie University</div>
         <div className="tag c">Marketing · events ·<br/>community engagement</div>
-        <div className="tag r">Based in<br/>Halifax, Nova Scotia</div>
+        <div className="tag r">Based in<br/>Toronto, Ontario</div>
       </div>
 
       <div className="wordmark">

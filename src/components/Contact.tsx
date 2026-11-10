@@ -81,7 +81,7 @@ export default function Contact(): JSX.Element {
             <div className="ct-info">
               {[
                 { label: 'Email', value: 'd.abhinav12@gmail.com', href: 'mailto:d.abhinav12@gmail.com' },
-                { label: 'Location', value: 'Halifax, Nova Scotia', href: null },
+                { label: 'Location', value: 'Toronto, Ontario', href: null },
                 { label: 'LinkedIn', value: 'in/abhinav-durgavarjhula', href: 'https://www.linkedin.com/in/abhinav-durgavarjhula/' },
                 { label: 'Instagram', value: '@the.diarybylens', href: 'https://instagram.com/the.diarybylens' },
               ].map((ci, i) => (

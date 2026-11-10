@@ -148,7 +148,7 @@ Open `src/components/About.tsx`.
 - **Facts list** — edit the `FACTS` array at the top of the file:
   ```ts
   ['Education', 'BA Psychology, Dalhousie University (Apr 2026)'],
-  ['Based in', 'Halifax, Nova Scotia'],
+  ['Based in', 'Toronto, Ontario'],
   ```
   Each pair is `['Label', 'Value']`.
 

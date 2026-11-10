@@ -7,7 +7,7 @@ const chips = ['Social Media Strategy','Event Management','Content Creation','Ma
 const facts = [
   { l: 'Education', v: 'BA Psychology, Minor in Management — Dalhousie University (Apr 2026)' },
   { l: 'Also', v: 'Study Abroad, National University of Singapore (2024–2025)' },
-  { l: 'Based in', v: 'Halifax, Nova Scotia' },
+  { l: 'Based in', v: 'Toronto, Ontario' },
   { l: 'Focus', v: 'Marketing · Events · Community Engagement' },
   { l: 'Languages', v: 'English · Hindi · Telugu' },
   { l: 'Status', v: 'Open to new opportunities' },
